@@ -587,7 +587,7 @@ with k1:
                 <div class="kpi-label">Total Revenue</div>
                 <div class="kpi-icon"
                      style="background:linear-gradient(135deg,#5B5CE2,#7C3AED);">
-                    ₹
+                    R$
                 </div>
             </div>
 
@@ -639,7 +639,7 @@ with k3:
                 <div class="kpi-label">Average Order Value</div>
                 <div class="kpi-icon"
                      style="background:linear-gradient(135deg,#10B981,#14B8A6);">
-                    $
+                    R$
                 </div>
             </div>
 
