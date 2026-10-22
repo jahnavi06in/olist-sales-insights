@@ -24,6 +24,180 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    /* =========================================================
+   PREMIUM NEUTRAL GLASS THEME
+   ========================================================= */
+
+.stApp {
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 255, 255, 0.95),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(244, 239, 230, 0.75),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(232, 229, 223, 0.55),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f5f3ef 48%,
+            #ebe8e2 100%
+        );
+}
+
+/* ---------- GLASS CARDS ---------- */
+
+.kpi-card,
+.insight-card,
+.decision-card {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.82),
+            rgba(248,247,244,0.58)
+        );
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255,255,255,0.85);
+
+    box-shadow:
+        0 12px 35px rgba(40, 38, 34, 0.07),
+        inset 0 1px 0 rgba(255,255,255,0.95);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.kpi-card:hover,
+.insight-card:hover,
+.decision-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 18px 42px rgba(40, 38, 34, 0.11),
+        inset 0 1px 0 rgba(255,255,255,1);
+}
+
+/* ---------- KPI VALUES ---------- */
+
+.kpi-value {
+    color: #171717;
+}
+
+/* ---------- SIDEBAR ---------- */
+
+[data-testid="stSidebar"] {
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.88),
+            rgba(242,240,236,0.72)
+        );
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    border-right: 1px solid rgba(255,255,255,0.9);
+}
+
+/* ---------- FILTER BOX ---------- */
+
+.filter-note {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.75),
+            rgba(240,238,233,0.60)
+        );
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255,255,255,0.85);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.95);
+}
+
+/* ---------- SECTION TITLES ---------- */
+
+.section-title {
+    color: #171717;
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(255,255,255,0.16),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 15% 90%,
+            rgba(220,215,205,0.14),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #181818 0%,
+            #292725 50%,
+            #3a3732 100%
+        );
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    border: 1px solid rgba(255,255,255,0.16);
+
+    box-shadow:
+        0 25px 60px rgba(35,32,28,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+/* ---------- CHART GLASS ---------- */
+
+[data-testid="stPlotlyChart"] {
+
+    background: rgba(255,255,255,0.42);
+
+    border-radius: 16px;
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255,255,255,0.72);
+
+    box-shadow:
+        0 10px 30px rgba(40,38,34,0.05);
+}
+
+/* ---------- TABLE ---------- */
+
+[data-testid="stDataFrame"] {
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 28px rgba(40,38,34,0.06);
+}
 
     /* ---------- GLOBAL ---------- */
 
