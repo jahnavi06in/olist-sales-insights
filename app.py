@@ -1,7 +1,5 @@
-import inspect
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import streamlit as st
 
 from data import load_data
@@ -12,7 +10,7 @@ from data import load_data
 # =========================================================
 
 st.set_page_config(
-    page_title="Olist Sales Intelligence",
+    page_title="Olist Sales Insights",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -20,296 +18,129 @@ st.set_page_config(
 
 
 # =========================================================
-# THEME
-# =========================================================
-
-PURPLE = "#6D5CE7"
-INDIGO = "#4F46E5"
-BLUE = "#2563EB"
-CYAN = "#0891B2"
-GREEN = "#059669"
-ORANGE = "#D97706"
-RED = "#DC2626"
-PINK = "#DB2777"
-DARK = "#111827"
-GREY = "#64748B"
-LIGHT = "#F5F7FB"
-BORDER = "#E5E7EB"
-
-PAGES = [
-    "Overview",
-    "Revenue Intelligence",
-    "Sales & Categories",
-    "Delivery Operations",
-    "Business Insights",
-]
-
-PAGE_ICONS = {
-    "Overview": "🏠",
-    "Revenue Intelligence": "📈",
-    "Sales & Categories": "🏷️",
-    "Delivery Operations": "🚚",
-    "Business Insights": "💡",
-}
-
-
-# =========================================================
-# GLOBAL CSS
+# CUSTOM CSS
 # =========================================================
 
 st.markdown(
-    f"""
+    """
     <style>
 
-    .stApp {{
-        background:
-            radial-gradient(
-                circle at 5% 0%,
-                rgba(109,92,231,0.08),
-                transparent 25%
-            ),
-            radial-gradient(
-                circle at 95% 10%,
-                rgba(37,99,235,0.05),
-                transparent 25%
-            ),
-            {LIGHT};
-    }}
+    .stApp {
+        background: #F6F7FB;
+    }
 
-    .block-container {{
-        max-width: 1550px;
+    .block-container {
+        max-width: 1500px;
         padding-top: 1.5rem;
         padding-bottom: 3rem;
-    }}
+    }
 
-    h1,h2,h3,h4 {{
-        color: {DARK} !important;
-    }}
+    section[data-testid="stSidebar"] {
+        background: #0F172A;
+    }
 
-    /* SIDEBAR */
-
-    section[data-testid="stSidebar"] {{
-        background: linear-gradient(
-            180deg,
-            #0B1026 0%,
-            #151B38 100%
-        );
-    }}
-
-    section[data-testid="stSidebar"] * {{
+    section[data-testid="stSidebar"] * {
         color: #E5E7EB;
-    }}
+    }
 
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3 {{
-        color: white !important;
-    }}
+    .hero {
+        background: linear-gradient(135deg, #111827, #312E81);
+        border-radius: 22px;
+        padding: 30px;
+        margin-bottom: 24px;
+    }
 
-    .brand {{
-        display:flex;
-        align-items:center;
-        gap:12px;
-        padding:8px 4px 20px 4px;
-    }}
+    .hero-eyebrow {
+        color: #A5B4FC;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
 
-    .brand-logo {{
-        width:45px;
-        height:45px;
-        border-radius:14px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        background:linear-gradient(
-            135deg,
-            #6D5CE7,
-            #8B5CF6
-        );
-        color:white;
-        font-size:22px;
-        font-weight:900;
-        box-shadow:0 10px 25px rgba(109,92,231,.35);
-    }}
+    .hero-title {
+        color: white;
+        font-size: 38px;
+        font-weight: 800;
+        margin: 5px 0;
+    }
 
-    .brand-name {{
-        color:white;
-        font-size:18px;
-        font-weight:800;
-    }}
+    .hero-text {
+        color: #D1D5DB;
+        font-size: 15px;
+    }
 
-    .brand-sub {{
-        color:#94A3B8;
-        font-size:11px;
-        margin-top:3px;
-    }}
+    .section-title {
+        color: #111827;
+        font-size: 23px;
+        font-weight: 800;
+        margin-top: 28px;
+        margin-bottom: 14px;
+    }
 
-    /* HEADER */
+    .kpi-card {
+        background: white;
+        border: 1px solid #E5E7EB;
+        border-radius: 18px;
+        padding: 19px;
+        min-height: 125px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+    }
 
-    .eyebrow {{
-        color:{PURPLE};
-        font-size:11px;
-        font-weight:900;
-        letter-spacing:2px;
-        text-transform:uppercase;
-        margin-bottom:5px;
-    }}
+    .kpi-label {
+        color: #6B7280;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.7px;
+    }
 
-    .main-title {{
-        font-size:38px;
-        font-weight:850;
-        color:{DARK};
-        letter-spacing:-1.5px;
-        line-height:1.1;
-    }}
+    .kpi-value {
+        color: #111827;
+        font-size: 26px;
+        font-weight: 800;
+        margin-top: 9px;
+    }
 
-    .subtitle {{
-        color:{GREY};
-        font-size:14px;
-        margin-top:7px;
-        margin-bottom:20px;
-    }}
+    .kpi-note {
+        color: #6B7280;
+        font-size: 12px;
+        margin-top: 5px;
+    }
 
-    /* KPI */
+    .decision-card {
+        background: white;
+        border: 1px solid #E5E7EB;
+        border-left: 5px solid #6366F1;
+        border-radius: 15px;
+        padding: 18px 20px;
+        margin: 15px 0;
+    }
 
-    .kpi {{
-        border-radius:20px;
-        padding:20px;
-        min-height:145px;
-        color:white;
-        box-shadow:0 12px 30px rgba(15,23,42,.12);
-        overflow:hidden;
-    }}
+    .decision-label {
+        color: #6366F1;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+    }
 
-    .kpi-label {{
-        font-size:12px;
-        font-weight:700;
-        opacity:.9;
-    }}
+    .decision-title {
+        color: #111827;
+        font-size: 17px;
+        font-weight: 800;
+        margin: 4px 0 7px;
+    }
 
-    .kpi-value {{
-        font-size:28px;
-        font-weight:850;
-        margin-top:12px;
-        letter-spacing:-1px;
-    }}
+    .decision-text {
+        color: #4B5563;
+        font-size: 14px;
+        line-height: 1.6;
+    }
 
-    .kpi-note {{
-        font-size:11px;
-        margin-top:7px;
-        opacity:.82;
-    }}
-
-    /* CARDS */
-
-    .card {{
-        background:white;
-        border:1px solid {BORDER};
-        border-radius:20px;
-        padding:20px;
-        box-shadow:0 7px 25px rgba(15,23,42,.045);
-        margin-bottom:16px;
-    }}
-
-    .card-title {{
-        color:{DARK};
-        font-size:16px;
-        font-weight:800;
-        margin-bottom:3px;
-    }}
-
-    .card-sub {{
-        color:#94A3B8;
-        font-size:11px;
-        margin-bottom:10px;
-    }}
-
-    /* DECISION */
-
-    .decision {{
-        background:linear-gradient(
-            135deg,
-            #111827,
-            #272052,
-            #4338CA
-        );
-        border-radius:20px;
-        padding:25px;
-        color:white;
-        box-shadow:0 15px 40px rgba(67,56,202,.18);
-        margin:15px 0;
-    }}
-
-    .decision-label {{
-        color:#C4B5FD;
-        font-size:10px;
-        font-weight:900;
-        letter-spacing:1.5px;
-        text-transform:uppercase;
-    }}
-
-    .decision-title {{
-        color:white;
-        font-size:23px;
-        font-weight:850;
-        margin-top:7px;
-    }}
-
-    .decision-text {{
-        color:#D1D5DB;
-        font-size:13px;
-        line-height:1.7;
-        margin-top:8px;
-    }}
-
-    /* INSIGHT */
-
-    .insight {{
-        background:white;
-        border:1px solid {BORDER};
-        border-radius:17px;
-        padding:19px;
-        height:100%;
-    }}
-
-    .insight-icon {{
-        font-size:22px;
-        margin-bottom:8px;
-    }}
-
-    .insight-title {{
-        font-weight:800;
-        font-size:14px;
-        color:{DARK};
-    }}
-
-    .insight-text {{
-        color:{GREY};
-        font-size:12px;
-        line-height:1.6;
-        margin-top:6px;
-    }}
-
-    /* TABLE */
-
-    .metric-big {{
-        font-size:30px;
-        font-weight:850;
-        color:{DARK};
-    }}
-
-    .metric-small {{
-        font-size:11px;
-        color:#94A3B8;
-    }}
-
-    .footer {{
-        text-align:center;
-        color:#94A3B8;
-        font-size:11px;
-        border-top:1px solid {BORDER};
-        padding-top:20px;
-        margin-top:40px;
-    }}
+    .footer {
+        text-align: center;
+        color: #9CA3AF;
+        font-size: 12px;
+        margin-top: 35px;
+    }
 
     </style>
     """,
@@ -321,74 +152,24 @@ st.markdown(
 # HELPERS
 # =========================================================
 
-def brl(value):
-    if pd.isna(value):
-        return "R$ 0"
-    return f"R$ {float(value):,.0f}"
+def money(value):
+    return f"R$ {value:,.0f}"
 
 
-def pct(value):
-    if pd.isna(value):
-        return "0.0%"
-    return f"{float(value):.1f}%"
+def percentage(value):
+    return f"{value:.1f}%"
 
 
-def show_chart(fig):
-    fig.update_layout(
-        template="plotly_white",
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(
-            family="Inter, Arial, sans-serif",
-            color=DARK,
-            size=11,
-        ),
-        margin=dict(
-            l=10,
-            r=10,
-            t=20,
-            b=10,
-        ),
-        hoverlabel=dict(
-            bgcolor="white",
-            font_size=12,
-        ),
-    )
-
-    if "width" in inspect.signature(st.plotly_chart).parameters:
-        st.plotly_chart(
-            fig,
-            width="stretch",
-            config={"displayModeBar": False},
-        )
-    else:
-        st.plotly_chart(
-            fig,
-            use_container_width=True,
-            config={"displayModeBar": False},
-        )
+def safe_divide(a, b):
+    if b == 0:
+        return 0
+    return a / b
 
 
-def card(title, subtitle=""):
+def show_kpi(label, value, note=""):
     st.markdown(
         f"""
-        <div class="card">
-            <div class="card-title">{title}</div>
-            <div class="card-sub">{subtitle}</div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-
-def close_card():
-    st.markdown("</div>", unsafe_allow_html=True)
-
-
-def kpi(label, value, note, gradient):
-    st.markdown(
-        f"""
-        <div class="kpi"
-             style="background:{gradient};">
+        <div class="kpi-card">
             <div class="kpi-label">{label}</div>
             <div class="kpi-value">{value}</div>
             <div class="kpi-note">{note}</div>
@@ -398,47 +179,49 @@ def kpi(label, value, note, gradient):
     )
 
 
-def decision(title, text):
+def show_decision(title, text):
     st.markdown(
         f"""
-        <div class="decision">
-            <div class="decision-label">
-                BUSINESS DECISION
-            </div>
-            <div class="decision-title">
-                {title}
-            </div>
-            <div class="decision-text">
-                {text}
-            </div>
+        <div class="decision-card">
+            <div class="decision-label">BUSINESS DECISION</div>
+            <div class="decision-title">{title}</div>
+            <div class="decision-text">{text}</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
 
-def section(title, subtitle=""):
-    st.markdown(
-        f"""
-        <div style="margin-top:24px;margin-bottom:12px;">
-            <div style="
-                font-size:19px;
-                font-weight:850;
-                color:{DARK};
-            ">
-                {title}
-            </div>
-            <div style="
-                font-size:12px;
-                color:#94A3B8;
-                margin-top:3px;
-            ">
-                {subtitle}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+def style_chart(fig, height=420):
+    fig.update_layout(
+        height=height,
+        margin=dict(l=10, r=10, t=55, b=10),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        font=dict(color="#374151"),
     )
+
+    fig.update_xaxes(showgrid=False)
+    fig.update_yaxes(
+        gridcolor="#EEF0F5",
+        zeroline=False,
+    )
+
+    return fig
+
+
+def clean_category(value):
+    value = str(value).strip()
+
+    if value.lower() in {
+        "",
+        "nan",
+        "none",
+        "unknown",
+    }:
+        return "Unknown"
+
+    return value.replace("_", " ").title()
 
 
 # =========================================================
@@ -447,9 +230,34 @@ def section(title, subtitle=""):
 
 try:
     df = load_data().copy()
-except Exception as e:
-    st.error("Unable to load the Olist dataset.")
-    st.exception(e)
+
+except Exception as error:
+    st.error("The dashboard could not load the Olist data.")
+    st.exception(error)
+    st.stop()
+
+
+# =========================================================
+# REQUIRED COLUMNS
+# =========================================================
+
+required_columns = {
+    "order_id",
+    "month",
+    "customer_state",
+    "category",
+    "revenue",
+    "delivery_days",
+    "is_late",
+}
+
+missing_columns = required_columns - set(df.columns)
+
+if missing_columns:
+    st.error(
+        "The following required columns are missing: "
+        + ", ".join(sorted(missing_columns))
+    )
     st.stop()
 
 
@@ -457,46 +265,53 @@ except Exception as e:
 # DATA CLEANING
 # =========================================================
 
-df["month"] = pd.to_datetime(df["month"])
+df["order_id"] = df["order_id"].astype(str)
+
+df["month"] = pd.to_datetime(
+    df["month"],
+    errors="coerce",
+)
+
+df["customer_state"] = (
+    df["customer_state"]
+    .astype(str)
+    .str.upper()
+    .str.strip()
+)
+
+df["category"] = df["category"].apply(clean_category)
 
 df["revenue"] = pd.to_numeric(
     df["revenue"],
     errors="coerce",
 ).fillna(0)
 
-df["category"] = (
-    df["category"]
-    .fillna("unknown")
-    .astype(str)
-    .str.replace("_", " ")
-    .str.title()
+df["delivery_days"] = pd.to_numeric(
+    df["delivery_days"],
+    errors="coerce",
 )
 
-df["customer_state"] = (
-    df["customer_state"]
-    .fillna("Unknown")
-    .astype(str)
-)
-
-df["order_id"] = df["order_id"].astype(str)
-
-if "delivery_days" in df.columns:
-    df["delivery_days"] = pd.to_numeric(
-        df["delivery_days"],
-        errors="coerce",
-    )
-
-if "is_late" in df.columns:
-    df["is_late"] = pd.to_numeric(
+df["is_late"] = (
+    pd.to_numeric(
         df["is_late"],
         errors="coerce",
-    ).fillna(0)
-
-if "review_score" in df.columns:
-    df["review_score"] = pd.to_numeric(
-        df["review_score"],
-        errors="coerce",
     )
+    .fillna(0)
+    .astype(int)
+)
+
+df = df.dropna(
+    subset=[
+        "month",
+        "order_id",
+    ]
+)
+
+df = df[df["revenue"] >= 0]
+
+if df.empty:
+    st.error("No usable records were found.")
+    st.stop()
 
 
 # =========================================================
@@ -505,92 +320,72 @@ if "review_score" in df.columns:
 
 with st.sidebar:
 
-    st.markdown(
-        """
-        <div class="brand">
-            <div class="brand-logo">OI</div>
-            <div>
-                <div class="brand-name">
-                    Olist Intelligence
-                </div>
-                <div class="brand-sub">
-                    Revenue & Sales Analytics
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    st.markdown("## 📊 Olist Sales Insights")
+
+    st.caption(
+        "Revenue & Sales Analytics Dashboard"
     )
 
-    st.markdown("---")
+    st.divider()
 
     page = st.radio(
-        "Navigation",
-        PAGES,
-        format_func=lambda x:
-            f"{PAGE_ICONS[x]}  {x}",
+        "Dashboard",
+        [
+            "Overview",
+            "Revenue Insights",
+            "Sales & Categories",
+            "Delivery Operations",
+            "Business Insights",
+        ],
     )
 
-    st.markdown("---")
+    st.divider()
 
     st.markdown("### Filters")
 
-    min_date = df["month"].min().date()
-    max_date = df["month"].max().date()
+    minimum_date = df["month"].min().date()
+    maximum_date = df["month"].max().date()
 
     selected_dates = st.date_input(
-        "Analysis period",
-        value=(min_date, max_date),
-        min_value=min_date,
-        max_value=max_date,
+        "Business period",
+        value=(
+            minimum_date,
+            maximum_date,
+        ),
+        min_value=minimum_date,
+        max_value=maximum_date,
     )
 
-    states = sorted(
+    all_states = sorted(
         df["customer_state"]
         .dropna()
         .unique()
+        .tolist()
     )
 
     selected_states = st.multiselect(
         "Customer states",
-        states,
-        default=[],
+        all_states,
+        default=all_states,
     )
 
-    categories = sorted(
+    all_categories = sorted(
         df["category"]
         .dropna()
         .unique()
+        .tolist()
     )
 
     selected_categories = st.multiselect(
         "Product categories",
-        categories,
-        default=[],
+        all_categories,
+        default=all_categories,
     )
 
-    st.markdown("---")
+    st.divider()
 
-    st.markdown(
-        """
-        <div style="
-            font-size:11px;
-            color:#94A3B8;
-            line-height:1.6;
-        ">
-        <b style="color:#E5E7EB;">
-        Dataset
-        </b><br>
-        Brazilian Olist E-Commerce<br><br>
-
-        <b style="color:#E5E7EB;">
-        Analytics focus
-        </b><br>
-        Revenue • Sales • Categories<br>
-        Delivery • Business Decisions
-        </div>
-        """,
-        unsafe_allow_html=True,
+    st.caption(
+        "Olist Brazilian E-Commerce Dataset"
     )
 
 
@@ -600,7 +395,10 @@ with st.sidebar:
 
 filtered = df.copy()
 
-if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
+if (
+    isinstance(selected_dates, (tuple, list))
+    and len(selected_dates) == 2
+):
 
     start_date = pd.Timestamp(
         selected_dates[0]
@@ -609,27 +407,47 @@ if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
     end_date = (
         pd.Timestamp(selected_dates[1])
         + pd.Timedelta(days=1)
-        - pd.Timedelta(seconds=1)
     )
 
     filtered = filtered[
         (filtered["month"] >= start_date)
-        & (filtered["month"] <= end_date)
+        & (filtered["month"] < end_date)
     ]
 
+
 if selected_states:
+
     filtered = filtered[
         filtered["customer_state"].isin(
             selected_states
         )
     ]
 
+else:
+
+    filtered = filtered.iloc[0:0]
+
+
 if selected_categories:
+
     filtered = filtered[
         filtered["category"].isin(
             selected_categories
         )
     ]
+
+else:
+
+    filtered = filtered.iloc[0:0]
+
+
+if filtered.empty:
+
+    st.warning(
+        "No data matches the selected filters."
+    )
+
+    st.stop()
 
 
 # =========================================================
@@ -638,47 +456,53 @@ if selected_categories:
 
 total_revenue = filtered["revenue"].sum()
 
-orders = filtered["order_id"].nunique()
+total_orders = filtered["order_id"].nunique()
 
-customers = (
-    filtered["customer_id"].nunique()
-    if "customer_id" in filtered.columns
-    else orders
+average_order_value = safe_divide(
+    total_revenue,
+    total_orders,
 )
 
-aov = (
-    total_revenue / orders
-    if orders
-    else 0
+order_level = (
+    filtered
+    .groupby("order_id", as_index=False)
+    .agg(
+        revenue=("revenue", "sum"),
+        is_late=("is_late", "max"),
+        delivery_days=("delivery_days", "max"),
+    )
 )
 
-late_rate = (
-    filtered["is_late"].mean() * 100
-    if "is_late" in filtered.columns
-    and len(filtered)
-    else 0
+late_delivery_rate = (
+    safe_divide(
+        order_level["is_late"].sum(),
+        len(order_level),
+    )
+    * 100
 )
 
 
 # =========================================================
-# HEADER
+# HERO
 # =========================================================
-
-st.markdown(
-    '<div class="eyebrow">OLIST REVENUE INTELLIGENCE</div>',
-    unsafe_allow_html=True,
-)
-
-st.markdown(
-    f'<div class="main-title">{page}</div>',
-    unsafe_allow_html=True,
-)
 
 st.markdown(
     """
-    <div class="subtitle">
-        A decision-focused sales intelligence platform
-        for revenue, category and operational performance.
+    <div class="hero">
+
+        <div class="hero-eyebrow">
+            SALES ANALYTICS DASHBOARD
+        </div>
+
+        <div class="hero-title">
+            Olist Sales Insights
+        </div>
+
+        <div class="hero-text">
+            Turning transactional e-commerce data into
+            revenue, sales and operational insights.
+        </div>
+
     </div>
     """,
     unsafe_allow_html=True,
@@ -691,120 +515,80 @@ st.markdown(
 
 def page_overview():
 
-    # -----------------------------------------------------
-    # KPI ROW
-    # -----------------------------------------------------
-
-    k1, k2, k3, k4 = st.columns(4)
-
-    with k1:
-        kpi(
-            "Total Revenue",
-            brl(total_revenue),
-            "Item revenue within selected period",
-            "linear-gradient(135deg,#5B5CE2,#7C3AED)",
-        )
-
-    with k2:
-        kpi(
-            "Orders",
-            f"{orders:,}",
-            "Unique delivered orders",
-            "linear-gradient(135deg,#2563EB,#0891B2)",
-        )
-
-    with k3:
-        kpi(
-            "Average Order Value",
-            brl(aov),
-            "Revenue per order",
-            "linear-gradient(135deg,#059669,#0D9488)",
-        )
-
-    with k4:
-        kpi(
-            "Late Delivery Rate",
-            pct(late_rate),
-            "Orders delivered after estimate",
-            "linear-gradient(135deg,#D97706,#EA580C)",
-        )
-
-    # -----------------------------------------------------
-    # REVENUE TREND
-    # -----------------------------------------------------
-
-    section(
-        "Revenue Performance",
-        "Monthly revenue trend across the selected period.",
+    st.markdown(
+        '<div class="section-title">Executive Overview</div>',
+        unsafe_allow_html=True,
     )
 
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        show_kpi(
+            "TOTAL REVENUE",
+            money(total_revenue),
+            "Selected business period",
+        )
+
+    with col2:
+        show_kpi(
+            "ORDERS",
+            f"{total_orders:,}",
+            "Unique orders",
+        )
+
+    with col3:
+        show_kpi(
+            "AVERAGE ORDER VALUE",
+            money(average_order_value),
+            "Revenue per order",
+        )
+
+    with col4:
+        show_kpi(
+            "LATE DELIVERY RATE",
+            percentage(late_delivery_rate),
+            "Order level",
+        )
+
     monthly = (
-        filtered.groupby("month")
+        filtered
+        .groupby("month", as_index=False)
         .agg(
             revenue=("revenue", "sum"),
             orders=("order_id", "nunique"),
         )
-        .reset_index()
         .sort_values("month")
     )
 
-    monthly["aov"] = (
-        monthly["revenue"]
-        / monthly["orders"].replace(0, pd.NA)
-    )
+    col1, col2 = st.columns(2)
 
-    if not monthly.empty:
+    with col1:
 
-        fig = go.Figure()
-
-        fig.add_trace(
-            go.Scatter(
-                x=monthly["month"],
-                y=monthly["revenue"],
-                mode="lines+markers",
-                name="Revenue",
-                line=dict(
-                    color=PURPLE,
-                    width=3,
-                ),
-                fill="tozeroy",
-                fillcolor="rgba(109,92,231,0.10)",
-                hovertemplate=(
-                    "%{x|%b %Y}<br>"
-                    "Revenue: R$ %{y:,.0f}"
-                    "<extra></extra>"
-                ),
-            )
+        fig = px.line(
+            monthly,
+            x="month",
+            y="revenue",
+            markers=True,
+            title="Monthly Revenue",
         )
 
-        fig.update_layout(
-            height=400,
-            xaxis_title="",
-            yaxis_title="Revenue",
+        fig.update_yaxes(
+            tickprefix="R$ "
         )
 
-        show_chart(fig)
-
-    # -----------------------------------------------------
-    # CATEGORY + STATES
-    # -----------------------------------------------------
-
-    c1, c2 = st.columns(2)
-
-    with c1:
-
-        card(
-            "Top Categories",
-            "Revenue contribution by product category.",
+        st.plotly_chart(
+            style_chart(fig),
+            use_container_width=True,
         )
 
-        cat = (
-            filtered.groupby("category")
+    with col2:
+
+        category = (
+            filtered
+            .groupby("category", as_index=False)
             .agg(
-                revenue=("revenue", "sum"),
-                orders=("order_id", "nunique"),
+                revenue=("revenue", "sum")
             )
-            .reset_index()
             .sort_values(
                 "revenue",
                 ascending=False,
@@ -813,459 +597,230 @@ def page_overview():
         )
 
         fig = px.bar(
-            cat.sort_values("revenue"),
+            category.sort_values("revenue"),
             x="revenue",
             y="category",
             orientation="h",
+            title="Top Categories by Revenue",
         )
 
-        fig.update_traces(
-            marker_color=PURPLE,
-            hovertemplate=(
-                "<b>%{y}</b><br>"
-                "Revenue: R$ %{x:,.0f}"
-                "<extra></extra>"
-            ),
+        fig.update_xaxes(
+            tickprefix="R$ "
         )
 
-        fig.update_layout(
-            height=430,
-            xaxis_title="Revenue",
-            yaxis_title="",
+        st.plotly_chart(
+            style_chart(fig),
+            use_container_width=True,
         )
 
-        show_chart(fig)
-        close_card()
-
-    with c2:
-
-        card(
-            "State Performance",
-            "Revenue generated across customer states.",
+    state = (
+        filtered
+        .groupby("customer_state", as_index=False)
+        .agg(
+            revenue=("revenue", "sum")
         )
-
-        state = (
-            filtered.groupby("customer_state")
-            .agg(
-                revenue=("revenue", "sum"),
-                orders=("order_id", "nunique"),
-            )
-            .reset_index()
-            .sort_values(
-                "revenue",
-                ascending=False,
-            )
-            .head(10)
+        .sort_values(
+            "revenue",
+            ascending=False,
         )
+        .head(10)
+    )
 
-        fig = px.bar(
-            state.sort_values("revenue"),
-            x="revenue",
-            y="customer_state",
-            orientation="h",
-        )
+    fig = px.bar(
+        state.sort_values("revenue"),
+        x="revenue",
+        y="customer_state",
+        orientation="h",
+        title="Top Customer States by Revenue",
+    )
 
-        fig.update_traces(
-            marker_color=BLUE,
-            hovertemplate=(
-                "<b>%{y}</b><br>"
-                "Revenue: R$ %{x:,.0f}"
-                "<extra></extra>"
-            ),
-        )
+    fig.update_xaxes(
+        tickprefix="R$ "
+    )
 
-        fig.update_layout(
-            height=430,
-            xaxis_title="Revenue",
-            yaxis_title="",
-        )
+    st.plotly_chart(
+        style_chart(fig),
+        use_container_width=True,
+    )
 
-        show_chart(fig)
-        close_card()
+    if not category.empty:
 
-    # -----------------------------------------------------
-    # EXECUTIVE SUMMARY
-    # -----------------------------------------------------
+        top_category = category.iloc[0]
 
-    if not monthly.empty:
-
-        best_month = monthly.loc[
-            monthly["revenue"].idxmax()
-        ]
-
-        best_category = (
-            cat.iloc[0]["category"]
-            if not cat.empty
-            else "N/A"
-        )
-
-        decision(
-            "Executive Sales Readout",
-            f"""
-            The selected business period generated
-            <b>{brl(total_revenue)}</b> across
-            <b>{orders:,}</b> orders, with an average order value
-            of <b>{brl(aov)}</b>.
-            <br><br>
-            The strongest revenue month was
-            <b>{best_month["month"].strftime("%B %Y")}</b>,
-            while <b>{best_category}</b> was the leading
-            product category by revenue.
-            <br><br>
-            The next commercial priority should be to protect
-            high-performing categories while improving order value
-            in high-volume categories.
-            """,
+        show_decision(
+            "Protect the revenue leader",
+            f"<b>{top_category['category']}</b> is the leading "
+            f"category by revenue, contributing "
+            f"<b>{money(top_category['revenue'])}</b>. "
+            "Maintain availability, monitor pricing and "
+            "protect the customer experience around this category.",
         )
 
 
 # =========================================================
-# PAGE 2 — REVENUE INTELLIGENCE
+# PAGE 2 — REVENUE INSIGHTS
 # =========================================================
 
 def page_revenue():
 
+    st.markdown(
+        '<div class="section-title">Revenue Insights</div>',
+        unsafe_allow_html=True,
+    )
+
     monthly = (
-        filtered.groupby("month")
+        filtered
+        .groupby("month", as_index=False)
         .agg(
             revenue=("revenue", "sum"),
             orders=("order_id", "nunique"),
         )
-        .reset_index()
         .sort_values("month")
     )
 
     monthly["aov"] = (
         monthly["revenue"]
-        / monthly["orders"].replace(0, pd.NA)
+        / monthly["orders"]
     )
 
-    monthly["mom_growth"] = (
+    monthly["mom"] = (
         monthly["revenue"]
         .pct_change()
         * 100
     )
 
-    # -----------------------------------------------------
-    # KPI
-    # -----------------------------------------------------
-
-    peak_month = (
-        monthly.loc[
-            monthly["revenue"].idxmax()
-        ]
-        if not monthly.empty
-        else None
-    )
+    peak = monthly.loc[
+        monthly["revenue"].idxmax()
+    ]
 
     latest_growth = (
-        monthly.iloc[-1]["mom_growth"]
+        monthly["mom"].iloc[-1]
         if len(monthly) > 1
         else 0
     )
 
-    r1, r2, r3, r4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
 
-    with r1:
-        kpi(
-            "Peak Revenue Month",
-            (
-                peak_month["month"].strftime("%b %Y")
-                if peak_month is not None
-                else "N/A"
-            ),
-            (
-                brl(peak_month["revenue"])
-                if peak_month is not None
-                else "No data"
-            ),
-            "linear-gradient(135deg,#6D5CE7,#4F46E5)",
+    with col1:
+        show_kpi(
+            "PEAK REVENUE MONTH",
+            peak["month"].strftime("%B %Y"),
+            money(peak["revenue"]),
         )
 
-    with r2:
-        kpi(
-            "Latest MoM Growth",
-            pct(latest_growth),
-            "Revenue change vs previous month",
-            "linear-gradient(135deg,#059669,#0D9488)",
+    with col2:
+        show_kpi(
+            "LATEST MOM GROWTH",
+            percentage(latest_growth),
+            "vs previous month",
         )
 
-    with r3:
-        kpi(
-            "Peak Monthly Revenue",
-            (
-                brl(peak_month["revenue"])
-                if peak_month is not None
-                else "R$ 0"
-            ),
-            "Highest observed month",
-            "linear-gradient(135deg,#2563EB,#0891B2)",
+    with col3:
+        show_kpi(
+            "REVENUE PER ORDER",
+            money(average_order_value),
+            "Selected period",
         )
 
-    with r4:
-        kpi(
-            "Revenue per Order",
-            brl(aov),
-            "Current selected period",
-            "linear-gradient(135deg,#D97706,#EA580C)",
-        )
-
-    # -----------------------------------------------------
-    # TREND + GROWTH
-    # -----------------------------------------------------
-
-    section(
-        "Revenue Trend & Growth",
-        "Identify acceleration, contraction and inflection points.",
+    fig = px.line(
+        monthly,
+        x="month",
+        y="revenue",
+        markers=True,
+        title="Revenue Trend",
     )
 
-    c1, c2 = st.columns(2)
+    fig.update_yaxes(
+        tickprefix="R$ "
+    )
 
-    with c1:
+    st.plotly_chart(
+        style_chart(fig, 430),
+        use_container_width=True,
+    )
 
-        card(
-            "Monthly Revenue",
-            "Absolute revenue performance.",
-        )
+    growth = monthly.dropna(
+        subset=["mom"]
+    )
 
-        fig = px.area(
-            monthly,
-            x="month",
-            y="revenue",
-        )
-
-        fig.update_traces(
-            line_color=PURPLE,
-            fillcolor="rgba(109,92,231,.15)",
-        )
-
-        fig.update_layout(
-            height=400,
-            xaxis_title="",
-            yaxis_title="Revenue",
-        )
-
-        show_chart(fig)
-        close_card()
-
-    with c2:
-
-        card(
-            "Month-over-Month Growth",
-            "Percentage change in monthly revenue.",
-        )
-
-        growth_df = monthly.dropna(
-            subset=["mom_growth"]
-        )
+    if not growth.empty:
 
         fig = px.bar(
-            growth_df,
+            growth,
             x="month",
-            y="mom_growth",
+            y="mom",
+            title="Month-over-Month Revenue Growth",
         )
 
-        fig.update_traces(
-            marker_color=[
-                GREEN if x >= 0 else RED
-                for x in growth_df["mom_growth"]
-            ],
-            hovertemplate=(
-                "%{x|%b %Y}<br>"
-                "Growth: %{y:.1f}%"
-                "<extra></extra>"
-            ),
+        fig.update_yaxes(
+            ticksuffix="%"
         )
 
-        fig.add_hline(
-            y=0,
-            line_dash="dash",
-            line_color="#CBD5E1",
+        st.plotly_chart(
+            style_chart(fig, 380),
+            use_container_width=True,
         )
-
-        fig.update_layout(
-            height=400,
-            xaxis_title="",
-            yaxis_title="Growth %",
-        )
-
-        show_chart(fig)
-        close_card()
-
-    # -----------------------------------------------------
-    # CATEGORY CONCENTRATION
-    # -----------------------------------------------------
-
-    section(
-        "Revenue Concentration",
-        "Measure dependency on leading product categories.",
-    )
 
     category = (
-        filtered.groupby("category")
+        filtered
+        .groupby("category", as_index=False)
         .agg(
-            revenue=("revenue", "sum"),
-            orders=("order_id", "nunique"),
+            revenue=("revenue", "sum")
         )
-        .reset_index()
         .sort_values(
             "revenue",
             ascending=False,
         )
     )
 
-    category["share"] = (
-        category["revenue"]
-        / category["revenue"].sum()
+    top5_share = (
+        safe_divide(
+            category.head(5)["revenue"].sum(),
+            total_revenue,
+        )
         * 100
     )
 
-    category["cumulative_share"] = (
-        category["share"].cumsum()
+    top10_share = (
+        safe_divide(
+            category.head(10)["revenue"].sum(),
+            total_revenue,
+        )
+        * 100
     )
 
-    c1, c2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
-    with c1:
-
-        card(
-            "Pareto Revenue Curve",
-            "How quickly categories accumulate total revenue.",
+    with col1:
+        show_kpi(
+            "TOP 5 CATEGORY SHARE",
+            percentage(top5_share),
+            "Revenue share",
         )
 
-        fig = go.Figure()
-
-        fig.add_trace(
-            go.Bar(
-                x=category["category"],
-                y=category["share"],
-                name="Revenue Share",
-                marker_color=PURPLE,
-            )
+    with col2:
+        show_kpi(
+            "TOP 10 CATEGORY SHARE",
+            percentage(top10_share),
+            "Revenue share",
         )
 
-        fig.add_trace(
-            go.Scatter(
-                x=category["category"],
-                y=category["cumulative_share"],
-                name="Cumulative Share",
-                mode="lines+markers",
-                yaxis="y2",
-                line=dict(
-                    color=ORANGE,
-                    width=3,
-                ),
-            )
+    with col3:
+        show_kpi(
+            "NUMBER OF CATEGORIES",
+            f"{len(category):,}",
+            "Selected period",
         )
 
-        fig.update_layout(
-            height=470,
-            yaxis=dict(
-                title="Category Revenue Share %",
-            ),
-            yaxis2=dict(
-                title="Cumulative %",
-                overlaying="y",
-                side="right",
-                range=[0, 105],
-            ),
-            xaxis=dict(
-                tickangle=-45,
-            ),
-        )
-
-        show_chart(fig)
-        close_card()
-
-    with c2:
-
-        top5 = (
-            category.head(5)["revenue"].sum()
-            / category["revenue"].sum()
-            * 100
-            if not category.empty
-            else 0
-        )
-
-        top10 = (
-            category.head(10)["revenue"].sum()
-            / category["revenue"].sum()
-            * 100
-            if not category.empty
-            else 0
-        )
-
-        card(
-            "Concentration Signals",
-            "Revenue dependency indicators.",
-        )
-
-        st.markdown(
-            f"""
-            <div style="padding:20px 5px;">
-
-                <div style="margin-bottom:25px;">
-                    <div class="metric-small">
-                        TOP 5 CATEGORY SHARE
-                    </div>
-                    <div class="metric-big">
-                        {top5:.1f}%
-                    </div>
-                </div>
-
-                <div style="margin-bottom:25px;">
-                    <div class="metric-small">
-                        TOP 10 CATEGORY SHARE
-                    </div>
-                    <div class="metric-big">
-                        {top10:.1f}%
-                    </div>
-                </div>
-
-                <div>
-                    <div class="metric-small">
-                        NUMBER OF CATEGORIES
-                    </div>
-                    <div class="metric-big">
-                        {len(category)}
-                    </div>
-                </div>
-
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        close_card()
-
-    if top5 >= 60:
-
-        decision(
-            "Concentration Risk",
-            f"""
-            The top five categories account for
-            <b>{top5:.1f}%</b> of revenue.
-            <br><br>
-            Protect inventory, pricing and customer experience
-            for these categories because a disruption could
-            materially affect overall revenue.
-            """,
-        )
-
-    else:
-
-        decision(
-            "Healthy Revenue Diversification",
-            f"""
-            The top five categories contribute
-            <b>{top5:.1f}%</b> of revenue.
-            <br><br>
-            The portfolio is relatively diversified, giving
-            management room to invest in growth categories
-            without excessive dependence on a small number
-            of product groups.
-            """,
-        )
+    show_decision(
+        "Healthy Revenue Diversification",
+        f"The top five categories contribute "
+        f"<b>{percentage(top5_share)}</b> of revenue. "
+        "The portfolio is relatively diversified, giving "
+        "management room to invest in growth categories "
+        "without excessive dependence on a small number "
+        "of product groups.",
+    )
 
 
 # =========================================================
@@ -1274,18 +829,29 @@ def page_revenue():
 
 def page_sales_categories():
 
+    st.markdown(
+        '<div class="section-title">Sales & Category Insights</div>',
+        unsafe_allow_html=True,
+    )
+
     category = (
-        filtered.groupby("category")
+        filtered
+        .groupby("category", as_index=False)
         .agg(
             revenue=("revenue", "sum"),
             orders=("order_id", "nunique"),
         )
-        .reset_index()
     )
 
     category["aov"] = (
         category["revenue"]
-        / category["orders"].replace(0, pd.NA)
+        / category["orders"]
+    )
+
+    category["revenue_share"] = (
+        category["revenue"]
+        / total_revenue
+        * 100
     )
 
     category = category.sort_values(
@@ -1293,850 +859,483 @@ def page_sales_categories():
         ascending=False,
     )
 
-    avg_orders = category["orders"].mean()
-    avg_aov = category["aov"].mean()
+    top = category.iloc[0]
 
-    category["revenue_share"] = (
-        category["revenue"]
-        / category["revenue"].sum()
-        * 100
-    )
+    col1, col2, col3, col4 = st.columns(4)
 
-    # -----------------------------------------------------
-    # KPI
-    # -----------------------------------------------------
-
-    top = category.iloc[0] if not category.empty else None
-
-    high_volume_high_value = category[
-        (category["orders"] >= avg_orders)
-        & (category["aov"] >= avg_aov)
-    ]
-
-    high_volume_low_value = category[
-        (category["orders"] >= avg_orders)
-        & (category["aov"] < avg_aov)
-    ]
-
-    s1, s2, s3, s4 = st.columns(4)
-
-    with s1:
-        kpi(
-            "Top Category",
-            (
-                str(top["category"])
-                if top is not None
-                else "N/A"
-            ),
-            (
-                brl(top["revenue"])
-                if top is not None
-                else ""
-            ),
-            "Highest revenue contribution",
-            "linear-gradient(135deg,#6D5CE7,#7C3AED)",
+    with col1:
+        show_kpi(
+            "TOP CATEGORY",
+            top["category"],
+            "Highest revenue",
         )
 
-    with s2:
-        kpi(
-            "Category AOV",
-            brl(avg_aov),
-            "Average across categories",
-            "linear-gradient(135deg,#2563EB,#0891B2)",
+    with col2:
+        show_kpi(
+            "TOP CATEGORY REVENUE",
+            money(top["revenue"]),
+            percentage(top["revenue_share"])
+            + " of revenue",
         )
 
-    with s3:
-        kpi(
-            "High-Value Categories",
-            f"{len(high_volume_high_value)}",
-            "High volume + high AOV",
-            "linear-gradient(135deg,#059669,#0D9488)",
+    with col3:
+        show_kpi(
+            "TOP CATEGORY ORDERS",
+            f"{int(top['orders']):,}",
+            "Unique orders",
         )
 
-    with s4:
-        kpi(
-            "Growth Opportunities",
-            f"{len(high_volume_low_value)}",
-            "High volume + lower AOV",
-            "linear-gradient(135deg,#D97706,#EA580C)",
+    with col4:
+        show_kpi(
+            "TOP CATEGORY AOV",
+            money(top["aov"]),
+            "Revenue per order",
         )
 
-    # -----------------------------------------------------
-    # TOP CATEGORIES + SCATTER
-    # -----------------------------------------------------
+    col1, col2 = st.columns(2)
 
-    section(
-        "Category Performance",
-        "Compare revenue scale, demand volume and order value.",
-    )
-
-    c1, c2 = st.columns([1, 1.25])
-
-    with c1:
-
-        card(
-            "Revenue Ranking",
-            "Top categories by total revenue.",
-        )
-
-        top_categories = category.head(12).copy()
+    with col1:
 
         fig = px.bar(
-            top_categories.sort_values("revenue"),
+            category.head(10).sort_values(
+                "revenue"
+            ),
             x="revenue",
             y="category",
             orientation="h",
+            title="Top Categories by Revenue",
         )
 
-        fig.update_traces(
-            marker_color=PURPLE,
-            hovertemplate=(
-                "<b>%{y}</b><br>"
-                "Revenue: R$ %{x:,.0f}"
-                "<extra></extra>"
-            ),
+        fig.update_xaxes(
+            tickprefix="R$ "
         )
 
-        fig.update_layout(
-            height=520,
-            xaxis_title="Revenue",
-            yaxis_title="",
+        st.plotly_chart(
+            style_chart(fig, 430),
+            use_container_width=True,
         )
 
-        show_chart(fig)
-        close_card()
-
-    with c2:
-
-        card(
-            "Volume vs Value Matrix",
-            "Identify high-volume and high-value categories.",
-        )
-
-        matrix = category.copy()
-
-        matrix["segment"] = "Low Volume / Low Value"
-
-        matrix.loc[
-            (matrix["orders"] >= avg_orders)
-            & (matrix["aov"] >= avg_aov),
-            "segment",
-        ] = "High Volume / High Value"
-
-        matrix.loc[
-            (matrix["orders"] >= avg_orders)
-            & (matrix["aov"] < avg_aov),
-            "segment",
-        ] = "High Volume / Low Value"
-
-        matrix.loc[
-            (matrix["orders"] < avg_orders)
-            & (matrix["aov"] >= avg_aov),
-            "segment",
-        ] = "Low Volume / High Value"
+    with col2:
 
         fig = px.scatter(
-            matrix,
+            category,
             x="orders",
             y="aov",
             size="revenue",
-            color="segment",
-            text="category",
-            color_discrete_map={
-                "High Volume / High Value": GREEN,
-                "High Volume / Low Value": BLUE,
-                "Low Volume / High Value": ORANGE,
-                "Low Volume / Low Value": RED,
-            },
-            hover_data=[
-                "revenue",
-                "revenue_share",
-            ],
+            hover_name="category",
+            title="Order Volume vs Average Order Value",
         )
 
-        fig.update_traces(
-            textposition="top center",
+        fig.update_yaxes(
+            tickprefix="R$ "
         )
 
-        fig.add_hline(
-            y=avg_aov,
-            line_dash="dash",
-            line_color="#CBD5E1",
+        st.plotly_chart(
+            style_chart(fig, 430),
+            use_container_width=True,
         )
 
-        fig.add_vline(
-            x=avg_orders,
-            line_dash="dash",
-            line_color="#CBD5E1",
-        )
-
-        fig.update_layout(
-            height=520,
-            xaxis_title="Orders",
-            yaxis_title="Average Order Value",
-        )
-
-        show_chart(fig)
-        close_card()
-
-    # -----------------------------------------------------
-    # OPPORTUNITY
-    # -----------------------------------------------------
-
-    if not high_volume_low_value.empty:
-
-        opportunity = high_volume_low_value.sort_values(
-            ["orders", "revenue"],
-            ascending=False,
-        ).iloc[0]
-
-        decision(
-            "Revenue Expansion Opportunity",
-            f"""
-            <b>{opportunity["category"]}</b> generates
-            <b>{opportunity["orders"]:,.0f}</b> orders but its
-            AOV is only <b>{brl(opportunity["aov"])}</b>.
-            <br><br>
-            This is a strong candidate for bundles,
-            cross-selling, premium alternatives and
-            minimum-order promotions.
-            """,
-        )
-
-    # -----------------------------------------------------
-    # TABLE
-    # -----------------------------------------------------
-
-    section(
-        "Category Performance Table",
-        "Detailed commercial ranking.",
+    st.markdown(
+        '<div class="section-title">Category Performance Matrix</div>',
+        unsafe_allow_html=True,
     )
+
+    median_orders = category["orders"].median()
+    median_aov = category["aov"].median()
+
+    matrix = category.copy()
+
+    matrix["segment"] = matrix.apply(
+        lambda row:
+        "High Volume + High Value"
+        if row["orders"] >= median_orders
+        and row["aov"] >= median_aov
+        else
+        "High Volume + Low Value"
+        if row["orders"] >= median_orders
+        else
+        "Low Volume + High Value"
+        if row["aov"] >= median_aov
+        else
+        "Low Volume + Low Value",
+        axis=1,
+    )
+
+    fig = px.scatter(
+        matrix,
+        x="orders",
+        y="aov",
+        size="revenue",
+        color="segment",
+        hover_name="category",
+        title="Category Volume vs Value",
+    )
+
+    fig.add_vline(
+        x=median_orders,
+        line_dash="dash",
+    )
+
+    fig.add_hline(
+        y=median_aov,
+        line_dash="dash",
+    )
+
+    fig.update_yaxes(
+        tickprefix="R$ "
+    )
+
+    st.plotly_chart(
+        style_chart(fig, 470),
+        use_container_width=True,
+    )
+
+    opportunity = category[
+        (category["orders"] >= median_orders)
+        & (category["aov"] < median_aov)
+    ].sort_values(
+        "orders",
+        ascending=False,
+    )
+
+    if not opportunity.empty:
+
+        opportunity_row = opportunity.iloc[0]
+
+        show_decision(
+            "Increase Revenue per Order",
+            f"<b>{opportunity_row['category']}</b> has strong "
+            f"order volume but an AOV of only "
+            f"<b>{money(opportunity_row['aov'])}</b>. "
+            "Test bundles, complementary products, premium "
+            "alternatives and threshold-based offers.",
+        )
 
     table = category.copy()
 
-    table["Revenue"] = table["revenue"].map(brl)
-    table["Revenue Share"] = table["revenue_share"].map(
-        lambda x: f"{x:.1f}%"
+    table["Revenue"] = table["revenue"].map(
+        money
     )
-    table["Orders"] = table["orders"].map(
-        lambda x: f"{x:,.0f}"
-    )
-    table["AOV"] = table["aov"].map(brl)
 
-    table = table[
-        [
-            "category",
-            "Revenue",
-            "Revenue Share",
-            "Orders",
-            "AOV",
-        ]
-    ].rename(
-        columns={
-            "category": "Category",
-        }
+    table["Orders"] = table["orders"].map(
+        lambda value: f"{int(value):,}"
+    )
+
+    table["AOV"] = table["aov"].map(
+        money
+    )
+
+    table["Revenue Share"] = table[
+        "revenue_share"
+    ].map(
+        percentage
     )
 
     st.dataframe(
-        table,
+        table[
+            [
+                "category",
+                "Revenue",
+                "Orders",
+                "AOV",
+                "Revenue Share",
+            ]
+        ].rename(
+            columns={
+                "category": "Category"
+            }
+        ),
         use_container_width=True,
         hide_index=True,
-        height=500,
     )
 
 
 # =========================================================
-# PAGE 4 — DELIVERY OPERATIONS
+# PAGE 4 — DELIVERY
 # =========================================================
 
 def page_delivery():
 
-    if "delivery_days" not in filtered.columns:
+    st.markdown(
+        '<div class="section-title">Delivery Operations</div>',
+        unsafe_allow_html=True,
+    )
 
-        st.warning(
-            "Delivery information is unavailable."
+    average_delivery = (
+        order_level["delivery_days"].mean()
+    )
+
+    late_revenue = order_level.loc[
+        order_level["is_late"] == 1,
+        "revenue",
+    ].sum()
+
+    on_time_revenue = order_level.loc[
+        order_level["is_late"] == 0,
+        "revenue",
+    ].sum()
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        show_kpi(
+            "LATE DELIVERY RATE",
+            percentage(late_delivery_rate),
+            "Order level",
         )
-        return
 
-    delivery = filtered.copy()
-
-    avg_delivery = delivery[
-        "delivery_days"
-    ].mean()
-
-    median_delivery = delivery[
-        "delivery_days"
-    ].median()
-
-    late = (
-        delivery["is_late"].mean() * 100
-        if "is_late" in delivery.columns
-        else 0
-    )
-
-    late_revenue = (
-        delivery.loc[
-            delivery["is_late"] == 1,
-            "revenue",
-        ].sum()
-        if "is_late" in delivery.columns
-        else 0
-    )
-
-    d1, d2, d3, d4 = st.columns(4)
-
-    with d1:
-        kpi(
-            "Average Delivery",
-            f"{avg_delivery:.1f} days",
+    with col2:
+        show_kpi(
+            "AVERAGE DELIVERY",
+            f"{average_delivery:.1f} days",
             "Purchase to delivery",
-            "linear-gradient(135deg,#2563EB,#0891B2)",
         )
 
-    with d2:
-        kpi(
-            "Median Delivery",
-            f"{median_delivery:.0f} days",
-            "Typical customer experience",
-            "linear-gradient(135deg,#6D5CE7,#7C3AED)",
+    with col3:
+        show_kpi(
+            "LATE-ORDER REVENUE",
+            money(late_revenue),
+            "Revenue in late orders",
         )
 
-    with d3:
-        kpi(
-            "Late Delivery Rate",
-            pct(late),
-            "Orders delivered late",
-            "linear-gradient(135deg,#D97706,#EA580C)",
+    with col4:
+        show_kpi(
+            "ON-TIME REVENUE",
+            money(on_time_revenue),
+            "Revenue in on-time orders",
         )
 
-    with d4:
-        kpi(
-            "Late-Order Revenue",
-            brl(late_revenue),
-            "Revenue exposed to late delivery",
-            "linear-gradient(135deg,#DC2626,#B91C1C)",
+    state = (
+        filtered
+        .groupby("customer_state", as_index=False)
+        .agg(
+            orders=("order_id", "nunique"),
+            late_rate=("is_late", "mean"),
+            avg_delivery=("delivery_days", "mean"),
+            revenue=("revenue", "sum"),
         )
-
-    # -----------------------------------------------------
-    # DELIVERY DISTRIBUTION
-    # -----------------------------------------------------
-
-    section(
-        "Delivery Performance",
-        "Understand operational speed and its relationship with sales.",
     )
 
-    c1, c2 = st.columns(2)
+    state["late_rate"] *= 100
 
-    with c1:
-
-        card(
-            "Delivery Time Distribution",
-            "Number of delivered orders by delivery duration.",
-        )
-
-        delivery_plot = delivery[
-            delivery["delivery_days"].between(
-                0,
-                delivery["delivery_days"].quantile(.99),
-            )
-        ]
-
-        fig = px.histogram(
-            delivery_plot,
-            x="delivery_days",
-            nbins=30,
-        )
-
-        fig.update_traces(
-            marker_color=BLUE,
-        )
-
-        fig.update_layout(
-            height=420,
-            xaxis_title="Delivery Days",
-            yaxis_title="Orders",
-        )
-
-        show_chart(fig)
-        close_card()
-
-    with c2:
-
-        card(
-            "Late vs On-Time Revenue",
-            "Revenue exposure by delivery performance.",
-        )
-
-        if "is_late" in delivery.columns:
-
-            status = (
-                delivery.groupby("is_late")
-                .agg(
-                    revenue=("revenue", "sum"),
-                    orders=("order_id", "nunique"),
-                )
-                .reset_index()
-            )
-
-            status["status"] = status["is_late"].map(
-                {
-                    0: "On Time",
-                    1: "Late",
-                }
-            )
-
-            fig = px.bar(
-                status,
-                x="status",
-                y="revenue",
-            )
-
-            fig.update_traces(
-                marker_color=[
-                    GREEN if x == "On Time"
-                    else RED
-                    for x in status["status"]
-                ],
-                hovertemplate=(
-                    "<b>%{x}</b><br>"
-                    "Revenue: R$ %{y:,.0f}"
-                    "<extra></extra>"
-                ),
-            )
-
-            fig.update_layout(
-                height=420,
-                xaxis_title="",
-                yaxis_title="Revenue",
-            )
-
-            show_chart(fig)
-
-        close_card()
-
-    # -----------------------------------------------------
-    # STATE RISK
-    # -----------------------------------------------------
-
-    section(
-        "Delivery Risk by State",
-        "Find locations where service performance may threaten revenue.",
+    state = state[
+        state["orders"] >= 100
+    ].sort_values(
+        "late_rate",
+        ascending=False,
     )
 
-    if "is_late" in delivery.columns:
+    col1, col2 = st.columns(2)
 
-        state_delivery = (
-            delivery.groupby("customer_state")
-            .agg(
-                orders=("order_id", "nunique"),
-                revenue=("revenue", "sum"),
-                late_rate=("is_late", "mean"),
-                avg_delivery=("delivery_days", "mean"),
-            )
-            .reset_index()
+    with col1:
+
+        fig = px.bar(
+            state.head(10).sort_values(
+                "late_rate"
+            ),
+            x="late_rate",
+            y="customer_state",
+            orientation="h",
+            title="Highest Late-Delivery Rates",
         )
 
-        state_delivery["late_rate"] *= 100
-
-        state_delivery = state_delivery[
-            state_delivery["orders"] >= 100
-        ]
-
-        state_delivery = state_delivery.sort_values(
-            "late_rate",
-            ascending=False,
+        fig.update_xaxes(
+            ticksuffix="%"
         )
 
-        if not state_delivery.empty:
-
-            fig = px.scatter(
-                state_delivery,
-                x="late_rate",
-                y="revenue",
-                size="orders",
-                color="late_rate",
-                text="customer_state",
-                color_continuous_scale=[
-                    "#DBEAFE",
-                    "#F59E0B",
-                    "#DC2626",
-                ],
-            )
-
-            fig.update_traces(
-                textposition="top center",
-            )
-
-            fig.update_layout(
-                height=500,
-                xaxis_title="Late Delivery Rate %",
-                yaxis_title="Revenue",
-                coloraxis_colorbar_title="Late %",
-            )
-
-            show_chart(fig)
-
-            risk = state_delivery.iloc[0]
-
-            decision(
-                "Operational Risk Signal",
-                f"""
-                <b>{risk["customer_state"]}</b> has the highest
-                late-delivery rate among states with at least
-                100 orders: <b>{risk["late_rate"]:.1f}%</b>.
-                <br><br>
-                Average delivery time is
-                <b>{risk["avg_delivery"]:.1f} days</b>, while the
-                state represents <b>{brl(risk["revenue"])}</b>
-                in revenue.
-                <br><br>
-                Prioritize carrier performance and fulfilment
-                investigation in this market.
-                """,
-            )
-
-    # -----------------------------------------------------
-    # REVIEW IMPACT
-    # -----------------------------------------------------
-
-    if "review_score" in delivery.columns:
-
-        section(
-            "Delivery & Customer Experience",
-            "Explore whether delivery performance aligns with review outcomes.",
+        st.plotly_chart(
+            style_chart(fig, 420),
+            use_container_width=True,
         )
 
-        review_df = delivery.dropna(
-            subset=[
-                "review_score",
-                "delivery_days",
-            ]
+    with col2:
+
+        fig = px.scatter(
+            state,
+            x="revenue",
+            y="late_rate",
+            size="orders",
+            hover_name="customer_state",
+            title="Revenue vs Delivery Risk",
         )
 
-        if not review_df.empty:
+        fig.update_xaxes(
+            tickprefix="R$ "
+        )
 
-            review_summary = (
-                review_df.groupby("review_score")
-                .agg(
-                    avg_delivery=(
-                        "delivery_days",
-                        "mean",
-                    ),
-                    orders=(
-                        "order_id",
-                        "nunique",
-                    ),
-                )
-                .reset_index()
-            )
+        fig.update_yaxes(
+            ticksuffix="%"
+        )
 
-            fig = px.bar(
-                review_summary,
-                x="review_score",
-                y="avg_delivery",
-            )
+        st.plotly_chart(
+            style_chart(fig, 420),
+            use_container_width=True,
+        )
 
-            fig.update_traces(
-                marker_color=PURPLE,
-            )
+    if not state.empty:
 
-            fig.update_layout(
-                height=400,
-                xaxis_title="Review Score",
-                yaxis_title="Average Delivery Days",
-            )
+        risk = state.iloc[0]
 
-            show_chart(fig)
+        show_decision(
+            "Maintain Delivery Discipline",
+            f"<b>{risk['customer_state']}</b> has the highest "
+            f"late-delivery rate among states with at least "
+            f"100 orders: <b>{risk['late_rate']:.1f}%</b>. "
+            f"Average delivery time is "
+            f"<b>{risk['avg_delivery']:.1f} days</b>, while "
+            f"the state represents "
+            f"<b>{money(risk['revenue'])}</b> in revenue. "
+            "Prioritize carrier performance and fulfilment "
+            "investigation in this market.",
+        )
 
 
 # =========================================================
 # PAGE 5 — BUSINESS INSIGHTS
 # =========================================================
 
-def page_business():
+def page_business_insights():
 
-    # -----------------------------------------------------
-    # BUILD BUSINESS METRICS
-    # -----------------------------------------------------
+    st.markdown(
+        '<div class="section-title">Business Insights</div>',
+        unsafe_allow_html=True,
+    )
 
     category = (
-        filtered.groupby("category")
+        filtered
+        .groupby("category", as_index=False)
         .agg(
             revenue=("revenue", "sum"),
             orders=("order_id", "nunique"),
         )
-        .reset_index()
     )
 
     category["aov"] = (
         category["revenue"]
-        / category["orders"].replace(0, pd.NA)
+        / category["orders"]
     )
 
-    state = (
-        filtered.groupby("customer_state")
-        .agg(
-            revenue=("revenue", "sum"),
-            orders=("order_id", "nunique"),
-        )
-        .reset_index()
+    category = category.sort_values(
+        "revenue",
+        ascending=False,
     )
 
-    state["aov"] = (
-        state["revenue"]
-        / state["orders"].replace(0, pd.NA)
+    top = category.iloc[0]
+
+    median_orders = category["orders"].median()
+    median_aov = category["aov"].median()
+
+    opportunity = category[
+        (category["orders"] >= median_orders)
+        & (category["aov"] < median_aov)
+    ].sort_values(
+        "orders",
+        ascending=False,
     )
 
-    top_category = (
-        category.sort_values(
-            "revenue",
-            ascending=False,
-        ).iloc[0]
-        if not category.empty
-        else None
+    show_decision(
+        "1 — Protect the Revenue Leader",
+        f"<b>{top['category']}</b> is the largest "
+        f"revenue contributor with "
+        f"<b>{money(top['revenue'])}</b>. "
+        "Maintain availability, monitor pricing and "
+        "protect the customer experience around this category.",
     )
 
-    top_state = (
-        state.sort_values(
-            "revenue",
-            ascending=False,
-        ).iloc[0]
-        if not state.empty
-        else None
-    )
+    if not opportunity.empty:
 
-    avg_category_aov = (
-        category["aov"].mean()
-        if not category.empty
-        else 0
-    )
+        row = opportunity.iloc[0]
 
-    opportunity_categories = category[
-        (category["orders"] >= category["orders"].mean())
-        & (category["aov"] < avg_category_aov)
-    ]
-
-    # -----------------------------------------------------
-    # EXECUTIVE SCORECARD
-    # -----------------------------------------------------
-
-    section(
-        "Executive Decision Center",
-        "Translate analytics into commercial actions.",
-    )
-
-    c1, c2, c3 = st.columns(3)
-
-    with c1:
-
-        st.markdown(
-            f"""
-            <div class="insight">
-                <div class="insight-icon">🏆</div>
-                <div class="insight-title">
-                    Revenue Leader
-                </div>
-                <div class="insight-text">
-                    <b>
-                    {top_category["category"]
-                    if top_category is not None else "N/A"}
-                    </b>
-                    is the strongest category by revenue,
-                    generating
-                    <b>
-                    {brl(top_category["revenue"])
-                    if top_category is not None else "R$ 0"}
-                    </b>.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with c2:
-
-        st.markdown(
-            f"""
-            <div class="insight">
-                <div class="insight-icon">📍</div>
-                <div class="insight-title">
-                    Strongest Market
-                </div>
-                <div class="insight-text">
-                    <b>
-                    {top_state["customer_state"]
-                    if top_state is not None else "N/A"}
-                    </b>
-                    leads state-level revenue with
-                    <b>
-                    {brl(top_state["revenue"])
-                    if top_state is not None else "R$ 0"}
-                    </b>.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with c3:
-
-        st.markdown(
-            f"""
-            <div class="insight">
-                <div class="insight-icon">🚀</div>
-                <div class="insight-title">
-                    Growth Pipeline
-                </div>
-                <div class="insight-text">
-                    <b>
-                    {len(opportunity_categories)}
-                    </b>
-                    categories have high order volume but
-                    below-average AOV, creating potential
-                    upsell opportunities.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    # -----------------------------------------------------
-    # BUSINESS PRIORITIES
-    # -----------------------------------------------------
-
-    section(
-        "Priority Actions",
-        "What management should do with the evidence.",
-    )
-
-    if top_category is not None:
-
-        decision(
-            "1 — Protect Revenue Leaders",
-            f"""
-            <b>{top_category["category"]}</b> is the largest
-            revenue contributor.
-            <br><br>
-            Maintain availability, monitor pricing and protect
-            the customer experience around this category.
-            """,
-        )
-
-    if not opportunity_categories.empty:
-
-        opp = opportunity_categories.sort_values(
-            "orders",
-            ascending=False,
-        ).iloc[0]
-
-        decision(
+        show_decision(
             "2 — Increase Revenue per Order",
-            f"""
-            <b>{opp["category"]}</b> has strong order volume
-            but an AOV of only <b>{brl(opp["aov"])}</b>.
-            <br><br>
-            Test bundles, complementary products,
-            premium alternatives and threshold-based offers.
-            """,
-        )
-
-    if late_rate >= 10:
-
-        decision(
-            "3 — Reduce Delivery Risk",
-            f"""
-            The current late-delivery rate is
-            <b>{late_rate:.1f}%</b>.
-            <br><br>
-            Delivery reliability should be treated as a
-            commercial issue because delayed orders expose
-            both revenue and customer satisfaction.
-            """,
+            f"<b>{row['category']}</b> has strong order volume "
+            f"but an AOV of only <b>{money(row['aov'])}</b>. "
+            "Test bundles, complementary products, premium "
+            "alternatives and threshold-based offers.",
         )
 
     else:
 
-        decision(
-            "3 — Maintain Delivery Discipline",
-            f"""
-            Late delivery is currently at
-            <b>{late_rate:.1f}%</b>.
-            <br><br>
-            Continue monitoring fulfilment performance while
-            protecting the operational standards that support
-            customer experience.
-            """,
+        show_decision(
+            "2 — Improve Order Economics",
+            "Review high-volume categories for bundling, "
+            "cross-selling and premium product opportunities.",
         )
 
-    # -----------------------------------------------------
-    # TOP STATE REVENUE
-    # -----------------------------------------------------
-
-    section(
-        "Market Opportunity",
-        "Revenue distribution across customer states.",
+    show_decision(
+        "3 — Maintain Delivery Discipline",
+        f"Late delivery is currently at "
+        f"<b>{percentage(late_delivery_rate)}</b>. "
+        "Continue monitoring fulfilment performance while "
+        "protecting the operational standards that support "
+        "customer experience.",
     )
 
-    if not state.empty:
-
-        state_chart = state.sort_values(
+    state = (
+        filtered
+        .groupby("customer_state", as_index=False)
+        .agg(
+            revenue=("revenue", "sum")
+        )
+        .sort_values(
             "revenue",
             ascending=False,
-        ).head(12)
-
-        fig = px.bar(
-            state_chart.sort_values("revenue"),
-            x="revenue",
-            y="customer_state",
-            orientation="h",
         )
+        .head(12)
+    )
 
-        fig.update_traces(
-            marker_color=BLUE,
-        )
+    fig = px.bar(
+        state.sort_values("revenue"),
+        x="revenue",
+        y="customer_state",
+        orientation="h",
+        title="Revenue Distribution Across Customer States",
+    )
 
-        fig.update_layout(
-            height=470,
-            xaxis_title="Revenue",
-            yaxis_title="State",
-        )
+    fig.update_xaxes(
+        tickprefix="R$ "
+    )
 
-        show_chart(fig)
-
-    # -----------------------------------------------------
-    # FINAL EXECUTIVE MESSAGE
-    # -----------------------------------------------------
+    st.plotly_chart(
+        style_chart(fig, 430),
+        use_container_width=True,
+    )
 
     st.markdown(
         f"""
-        <div class="decision">
+        <div class="decision-card">
 
             <div class="decision-label">
                 MANAGEMENT SUMMARY
             </div>
 
             <div class="decision-title">
-                From dashboard to decision
+                From Dashboard to Decision
             </div>
 
             <div class="decision-text">
 
                 The selected business period represents
-                <b>{brl(total_revenue)}</b> in revenue across
-                <b>{orders:,}</b> orders.
+                <b>{money(total_revenue)}</b>
+                in revenue across
+                <b>{total_orders:,}</b>
+                orders.
 
                 The strongest opportunity is not simply to
                 increase order volume, but to improve the
                 economics of existing demand through category
-                mix, average order value and operational
-                reliability.
+                mix, average order value and operational reliability.
 
                 <br><br>
 
                 The dashboard therefore prioritizes three levers:
+
                 <b>protect revenue leaders</b>,
-                <b>increase value per transaction</b>, and
+
+                <b>increase value per transaction</b>,
+
+                and
+
                 <b>reduce delivery risk</b>.
 
             </div>
@@ -2148,23 +1347,28 @@ def page_business():
 
 
 # =========================================================
-# ROUTER
+# PAGE ROUTER
 # =========================================================
 
 if page == "Overview":
+
     page_overview()
 
-elif page == "Revenue Intelligence":
+elif page == "Revenue Insights":
+
     page_revenue()
 
 elif page == "Sales & Categories":
+
     page_sales_categories()
 
 elif page == "Delivery Operations":
+
     page_delivery()
 
 elif page == "Business Insights":
-    page_business()
+
+    page_business_insights()
 
 
 # =========================================================
@@ -2174,9 +1378,8 @@ elif page == "Business Insights":
 st.markdown(
     """
     <div class="footer">
-        Olist Sales Intelligence • Revenue Analytics Dashboard
-        <br>
-        Built with Python • Pandas • Plotly • Streamlit
+        Olist Sales Insights • Revenue & Sales Analytics Dashboard
+        • Built with Python • Pandas • Plotly • Streamlit
     </div>
     """,
     unsafe_allow_html=True,
