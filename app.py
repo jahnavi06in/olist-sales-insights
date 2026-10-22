@@ -161,9 +161,12 @@ section[data-testid="stSidebar"] div[role="slider"] { background: #7C3AED !impor
     display: flex; align-items: center; justify-content: center; font-size: 18px; flex: none;
 }
 .kpi-label { color: white !important; font-size: 15px; font-weight: 600; }
-.kpi-value { color: white !important; font-size: 33px; font-weight: 800; margin-top: 14px; letter-spacing: -1px; }
+.kpi-value {
+    color: white !important; font-size: clamp(19px, 2.1vw, 31px); font-weight: 800;
+    margin-top: 14px; letter-spacing: -1px; word-break: keep-all; overflow-wrap: normal;
+}
 .kpi .delta { color: rgba(255,255,255,0.92) !important; font-size: 12px; font-weight: 600; }
-.spark { position: absolute; right: 16px; bottom: 16px; opacity: 0.9; }
+.spark { display: block; width: 100%; height: 34px; margin-top: 12px; opacity: 0.9; }
 
 /* ---------- CARDS ---------- */
 [class*="st-key-card-"] {
@@ -257,7 +260,6 @@ section[data-testid="stSidebar"] div[role="slider"] { background: #7C3AED !impor
     .block-container { padding: 1rem; }
     .main-title { font-size: 30px; }
     .kpi { min-height: 140px; padding: 18px; margin-bottom: 12px; }
-    .kpi-value { font-size: 27px; }
     .header-right { justify-content: flex-start; margin-bottom: 8px; }
 }
 </style>
@@ -334,9 +336,9 @@ def sparkline(values, width: int = 120, height: int = 44) -> str:
         for i, v in enumerate(vals)
     )
     return (
-        f'<svg class="spark" viewBox="0 0 {width} {height}" width="{width}" height="{height}">'
+        f'<svg class="spark" viewBox="0 0 {width} {height}" preserveAspectRatio="none">'
         f'<polyline points="{pts}" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" '
-        f'stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        f'vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/></svg>'
     )
 
 
