@@ -642,28 +642,17 @@ late_revenue = filtered_df.loc[
 # =========================================================
 
 st.markdown(
-    """
-    <div class="hero">
-
-        <div class="hero-eyebrow">
-            SALES ANALYTICS DASHBOARD
-        </div>
-
-        <div class="hero-title">
-            Olist Sales Insights
-        </div>
-
-        <div class="hero-text">
-            Turning transactional e-commerce data into
-            actionable revenue, sales and operational insights.
-        </div>
-
-    </div>
-    """,
-    unsafe_allow_html=True,
+    "### SALES ANALYTICS DASHBOARD"
 )
 
+st.title("Olist Sales Insights")
 
+st.caption(
+    "Turning transactional e-commerce data into actionable "
+    "revenue, sales and operational insights."
+)
+
+st.divider()
 # =========================================================
 # PAGE 1 — OVERVIEW
 # =========================================================
