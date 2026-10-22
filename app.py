@@ -23,85 +23,221 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+# =========================================================
+# PREMIUM DARK GLASS SAAS THEME
+# =========================================================
+
+st.markdown("""
+<style>
+
+/* =========================================================
+   GLOBAL BACKGROUND
+   ========================================================= */
 
 .stApp {
     background:
         radial-gradient(
-            circle at 5% 5%,
-            rgba(255,255,255,0.95) 0%,
+            circle at 12% 8%,
+            rgba(154, 190, 91, 0.16),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 88% 12%,
+            rgba(214, 166, 72, 0.13),
             transparent 28%
         ),
         radial-gradient(
-            circle at 95% 10%,
-            rgba(218,210,198,0.55) 0%,
+            circle at 55% 92%,
+            rgba(91, 112, 76, 0.13),
             transparent 30%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(205,198,188,0.45) 0%,
-            transparent 35%
         ),
         linear-gradient(
             135deg,
-            #ffffff 0%,
-            #f3f0eb 45%,
-            #e6e1d9 100%
+            #090b09 0%,
+            #111411 42%,
+            #171916 72%,
+            #0b0d0b 100%
         );
 
-    color: #1c1a18;
+    color: #f4f1e9;
 }
 
 
-/* ---------- MAIN CONTENT ---------- */
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
 
 .block-container {
-    padding-top: 2rem;
-    padding-bottom: 3rem;
+    padding-top: 2.2rem;
+    padding-bottom: 4rem;
+    max-width: 1500px;
 }
 
 
-/* ---------- SIDEBAR ---------- */
+/* =========================================================
+   SIDEBAR — DARK GLASS
+   ========================================================= */
 
 [data-testid="stSidebar"] {
+
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,0.82),
-            rgba(232,228,221,0.65)
-        );
+            rgba(25, 29, 24, 0.94),
+            rgba(9, 11, 9, 0.96)
+        ) !important;
 
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(35px);
+    -webkit-backdrop-filter: blur(35px);
 
-    border-right: 1px solid rgba(255,255,255,0.9);
+    border-right:
+        1px solid rgba(255,255,255,0.08);
 
     box-shadow:
-        8px 0 35px rgba(40,35,30,0.06);
+        12px 0 50px rgba(0,0,0,0.35);
 }
 
 
-/* ---------- TITLE ---------- */
+/* Sidebar text */
+
+[data-testid="stSidebar"] * {
+    color: #e9e7df;
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
 
 h1 {
-    color: #181715 !important;
+    color: #f7f4ec !important;
     font-weight: 800 !important;
-    letter-spacing: -1.5px;
+    letter-spacing: -1.8px;
 }
 
 h2 {
-    color: #24211e !important;
+    color: #eeeae0 !important;
     font-weight: 750 !important;
 }
 
 h3 {
-    color: #302d29 !important;
+    color: #ddd8cc !important;
+    font-weight: 700 !important;
 }
 
 
-/* ---------- CAPTION ---------- */
+/* =========================================================
+   CAPTIONS
+   ========================================================= */
 
 .stCaption {
-    color: #69645d !important;
+    color: #aaa99f !important;
+}
+
+
+/* =========================================================
+   SIDEBAR BRAND
+   ========================================================= */
+
+.sidebar-brand {
+
+    padding:
+        18px 16px 22px 16px;
+
+    margin-bottom: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.025)
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 20px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 15px 35px rgba(0,0,0,0.25);
+}
+
+.sidebar-brand-title {
+
+    font-size: 1.05rem;
+    font-weight: 800;
+
+    color: #f5f1e7;
+
+    letter-spacing: -0.3px;
+}
+
+.sidebar-brand-subtitle {
+
+    margin-top: 5px;
+
+    font-size: 0.72rem;
+
+    color: #a7a99d;
+
+    letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
+   SIDEBAR SECTION LABELS
+   ========================================================= */
+
+.sidebar-section {
+
+    margin-top: 18px;
+    margin-bottom: 9px;
+
+    color: #969b8d;
+
+    font-size: 0.67rem;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   RADIO NAVIGATION
+   ========================================================= */
+
+[data-testid="stSidebar"] [role="radiogroup"] {
+
+    gap: 6px;
+}
+
+[data-testid="stSidebar"] [role="radiogroup"] label {
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border:
+        1px solid transparent;
+
+    border-radius: 13px;
+
+    padding: 8px 10px;
+
+    transition:
+        all 0.2s ease;
+}
+
+[data-testid="stSidebar"] [role="radiogroup"] label:hover {
+
+    background:
+        rgba(255,255,255,0.075);
+
+    border-color:
+        rgba(255,255,255,0.08);
 }
 
 
@@ -113,36 +249,39 @@ h3 {
 
     position: relative;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.88),
-            rgba(255,255,255,0.48)
-        );
+    min-height: 145px;
 
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-
-    border: 1px solid rgba(255,255,255,0.95);
-
-    border-radius: 22px;
-
-    padding: 22px 24px;
-
-    box-shadow:
-        0 20px 45px rgba(40,35,30,0.09),
-        0 4px 12px rgba(40,35,30,0.04),
-        inset 0 1px 0 rgba(255,255,255,1);
+    padding: 22px 23px;
 
     overflow: hidden;
 
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.105),
+            rgba(255,255,255,0.035)
+        );
+
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border:
+        1px solid rgba(255,255,255,0.105);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.10);
+
     transition:
         transform 0.25s ease,
+        border 0.25s ease,
         box-shadow 0.25s ease;
 }
 
 
-/* Glass reflection */
+/* Glow */
 
 .kpi-card::before {
 
@@ -150,20 +289,44 @@ h3 {
 
     position: absolute;
 
-    top: -70px;
-    left: -50px;
+    width: 170px;
+    height: 170px;
 
-    width: 180px;
-    height: 140px;
+    top: -90px;
+    right: -55px;
 
     background:
         radial-gradient(
             circle,
-            rgba(255,255,255,0.85),
-            transparent 70%
+            rgba(176,201,105,0.19),
+            transparent 68%
         );
 
     pointer-events: none;
+}
+
+
+/* Glass reflection */
+
+.kpi-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.30),
+            transparent
+        );
 }
 
 
@@ -171,34 +334,54 @@ h3 {
 
 .kpi-card:hover {
 
-    transform: translateY(-5px);
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(190,205,140,0.20);
 
     box-shadow:
-        0 28px 55px rgba(40,35,30,0.13),
-        0 8px 18px rgba(40,35,30,0.06),
-        inset 0 1px 0 rgba(255,255,255,1);
+        0 30px 70px rgba(0,0,0,0.38),
+        0 0 35px rgba(154,190,91,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.13);
 }
 
 
 /* KPI text */
 
 .kpi-label {
-    color: #77716a !important;
-    font-size: 0.82rem;
-    font-weight: 650;
+
+    color: #9fa399 !important;
+
+    font-size: 0.70rem;
+
+    font-weight: 750;
+
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+
+    letter-spacing: 0.12em;
 }
 
 .kpi-value {
-    color: #171614 !important;
+
+    margin-top: 8px;
+
+    color: #f7f4eb !important;
+
     font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -1px;
+
+    font-weight: 850;
+
+    letter-spacing: -1.5px;
 }
 
 .kpi-note {
-    color: #817b73 !important;
+
+    margin-top: 6px;
+
+    color: #858b80 !important;
+
+    font-size: 0.76rem;
 }
 
 
@@ -208,81 +391,176 @@ h3 {
 
 .insight-card {
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.78),
-            rgba(248,246,242,0.46)
-        );
+    position: relative;
 
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-
-    border: 1px solid rgba(255,255,255,0.9);
-
-    border-radius: 20px;
+    overflow: hidden;
 
     padding: 22px;
 
-    box-shadow:
-        0 18px 40px rgba(40,35,30,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.95);
-}
-
-
-/* =========================================================
-   DECISION CARDS
-   ========================================================= */
-
-.decision-card {
+    min-height: 135px;
 
     background:
         linear-gradient(
-            135deg,
-            rgba(255,255,255,0.84),
-            rgba(235,231,224,0.52)
+            145deg,
+            rgba(255,255,255,0.085),
+            rgba(255,255,255,0.025)
         );
 
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
 
-    border: 1px solid rgba(255,255,255,0.92);
+    border:
+        1px solid rgba(255,255,255,0.09);
 
-    border-radius: 22px;
-
-    padding: 24px;
+    border-radius: 20px;
 
     box-shadow:
-        0 22px 48px rgba(40,35,30,0.10),
-        inset 0 1px 0 rgba(255,255,255,1);
+        0 20px 45px rgba(0,0,0,0.24),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.insight-label {
+
+    color: #a8ae9b;
+
+    font-size: 0.66rem;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.12em;
+}
+
+.insight-title {
+
+    margin-top: 7px;
+
+    color: #f0ede4;
+
+    font-size: 1.05rem;
+
+    font-weight: 800;
+}
+
+.insight-text {
+
+    margin-top: 8px;
+
+    color: #a7aaa0;
+
+    font-size: 0.83rem;
+
+    line-height: 1.55;
 }
 
 
 /* =========================================================
-   CHART GLASS CONTAINERS
+   DECISION CENTER CARDS
+   ========================================================= */
+
+.decision-card {
+
+    position: relative;
+
+    margin-bottom: 14px;
+
+    padding: 21px 23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.085),
+            rgba(255,255,255,0.025)
+        );
+
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border:
+        1px solid rgba(255,255,255,0.09);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 18px 42px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.decision-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 18px;
+
+    width: 3px;
+    height: calc(100% - 36px);
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #c6d58b,
+            #d6a64a
+        );
+
+    box-shadow:
+        0 0 15px rgba(198,213,139,0.25);
+}
+
+.decision-title {
+
+    color: #f2efe6;
+
+    font-size: 0.95rem;
+
+    font-weight: 800;
+
+    margin-left: 9px;
+}
+
+.decision-text {
+
+    color: #a4a79d;
+
+    font-size: 0.82rem;
+
+    line-height: 1.55;
+
+    margin-top: 7px;
+}
+
+
+/* =========================================================
+   PLOTLY GLASS CONTAINERS
    ========================================================= */
 
 [data-testid="stPlotlyChart"] {
 
     background:
         linear-gradient(
-            135deg,
-            rgba(255,255,255,0.72),
-            rgba(248,246,242,0.40)
+            145deg,
+            rgba(255,255,255,0.075),
+            rgba(255,255,255,0.025)
         );
 
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(26px);
+    -webkit-backdrop-filter: blur(26px);
+
+    border:
+        1px solid rgba(255,255,255,0.085);
 
     border-radius: 22px;
 
-    border: 1px solid rgba(255,255,255,0.88);
-
-    padding: 8px;
+    padding: 10px;
 
     box-shadow:
-        0 18px 40px rgba(40,35,30,0.07),
-        inset 0 1px 0 rgba(255,255,255,0.95);
+        0 22px 50px rgba(0,0,0,0.26),
+        inset 0 1px 0 rgba(255,255,255,0.07);
 }
 
 
@@ -292,46 +570,87 @@ h3 {
 
 .filter-note {
 
+    margin-top: 15px;
+
+    padding: 14px 16px;
+
     background:
         linear-gradient(
-            135deg,
-            rgba(255,255,255,0.80),
-            rgba(238,234,227,0.50)
+            145deg,
+            rgba(255,255,255,0.075),
+            rgba(255,255,255,0.025)
         );
 
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
 
-    border: 1px solid rgba(255,255,255,0.9);
+    border:
+        1px solid rgba(255,255,255,0.08);
 
-    border-radius: 18px;
+    border-radius: 16px;
 
-    padding: 15px 18px;
+    color: #969b91;
 
-    box-shadow:
-        0 12px 30px rgba(40,35,30,0.06),
-        inset 0 1px 0 rgba(255,255,255,0.95);
+    font-size: 0.73rem;
+
+    line-height: 1.5;
 }
 
 
 /* =========================================================
-   STREAMLIT INPUTS
+   STREAMLIT SELECT BOXES
    ========================================================= */
 
 [data-baseweb="select"] > div {
 
     background:
-        rgba(255,255,255,0.60) !important;
+        rgba(255,255,255,0.055) !important;
 
     backdrop-filter: blur(18px);
 
     border:
-        1px solid rgba(255,255,255,0.85) !important;
+        1px solid rgba(255,255,255,0.10) !important;
 
-    border-radius: 14px !important;
+    border-radius: 13px !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.9);
+        inset 0 1px 0 rgba(255,255,255,0.06);
+
+    color: #eeeeea !important;
+}
+
+
+/* =========================================================
+   DATE INPUT
+   ========================================================= */
+
+[data-testid="stDateInput"] input {
+
+    background:
+        rgba(255,255,255,0.055) !important;
+
+    color: #eeeae1 !important;
+
+    border:
+        1px solid rgba(255,255,255,0.10) !important;
+
+    border-radius: 13px !important;
+}
+
+
+/* =========================================================
+   MULTISELECT TAGS
+   ========================================================= */
+
+[data-baseweb="tag"] {
+
+    background:
+        rgba(188,205,123,0.16) !important;
+
+    border:
+        1px solid rgba(188,205,123,0.22) !important;
+
+    border-radius: 9px !important;
 }
 
 
@@ -341,12 +660,15 @@ h3 {
 
 [data-testid="stDataFrame"] {
 
+    border:
+        1px solid rgba(255,255,255,0.08);
+
     border-radius: 20px;
 
     overflow: hidden;
 
     box-shadow:
-        0 18px 40px rgba(40,35,30,0.07);
+        0 20px 45px rgba(0,0,0,0.25);
 }
 
 
@@ -364,7 +686,7 @@ hr {
         linear-gradient(
             90deg,
             transparent,
-            rgba(70,65,60,0.16),
+            rgba(255,255,255,0.12),
             transparent
         );
 }
@@ -379,30 +701,85 @@ hr {
     background:
         linear-gradient(
             135deg,
-            #292622,
-            #454039
+            #b8c978,
+            #d2a44d
         );
 
-    color: white;
+    color: #151712 !important;
 
-    border: 1px solid rgba(255,255,255,0.25);
+    border:
+        none;
 
-    border-radius: 13px;
+    border-radius: 12px;
+
+    font-weight: 800;
 
     padding: 8px 20px;
 
     box-shadow:
-        0 8px 20px rgba(35,32,28,0.16);
+        0 10px 25px rgba(190,170,90,0.18);
 
-    transition: all 0.2s ease;
+    transition:
+        all 0.2s ease;
 }
 
 .stButton > button:hover {
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 
     box-shadow:
-        0 12px 26px rgba(35,32,28,0.22);
+        0 15px 32px rgba(190,170,90,0.28);
+}
+
+
+/* =========================================================
+   SECTION TITLES
+   ========================================================= */
+
+.section-title {
+
+    margin-top: 28px;
+
+    color: #eeeae1;
+
+    font-size: 1.18rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.3px;
+}
+
+.section-subtitle {
+
+    margin-top: 4px;
+
+    margin-bottom: 16px;
+
+    color: #8f958a;
+
+    font-size: 0.79rem;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+
+    margin-top: 50px;
+
+    padding: 22px;
+
+    text-align: center;
+
+    color: #737970;
+
+    font-size: 0.72rem;
+
+    border-top:
+        1px solid rgba(255,255,255,0.07);
 }
 
 
@@ -411,25 +788,73 @@ hr {
    ========================================================= */
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #090b09;
 }
 
 ::-webkit-scrollbar-thumb {
 
     background:
-        rgba(70,65,60,0.25);
+        linear-gradient(
+            180deg,
+            #697255,
+            #8c7041
+        );
 
     border-radius: 20px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
 
     background:
-        rgba(70,65,60,0.40);
+        linear-gradient(
+            180deg,
+            #a7b979,
+            #c69a4d
+        );
 }
+
+
+/* =========================================================
+   REMOVE EXTRA STREAMLIT TOP SPACE
+   ========================================================= */
+
+[data-testid="stHeader"] {
+    background: transparent !important;
+}
+
+[data-testid="stToolbar"] {
+    background: transparent !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .block-container {
+        padding-top: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .kpi-card {
+        min-height: 125px;
+        padding: 18px;
+    }
+
+    .kpi-value {
+        font-size: 1.55rem;
+    }
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 </style>
 """, unsafe_allow_html=True
