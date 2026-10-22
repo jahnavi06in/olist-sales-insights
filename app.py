@@ -425,16 +425,14 @@ hr {
 
     border-radius: 20px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
 
     background:
         rgba(70,65,60,0.40);
 }
-""", unsafe_allow_html=True)
+
 </style>
-    """,
-    unsafe_allow_html=True,
+""", unsafe_allow_html=True
 )
 
 
