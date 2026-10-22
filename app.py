@@ -21,9 +21,6 @@ st.set_page_config(
 # CUSTOM CSS
 # =========================================================
 
-st.markdown(
-    """
-    <style>
    st.markdown("""
 <style>
 
