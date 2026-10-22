@@ -569,7 +569,7 @@ with st.sidebar:
     )
     html(
         """
-        <div class="side-note" style="margin-top:14px"><b>Analysis</b><br>Delivered orders • Revenue excludes freight</div>
+        <div class="side-note" style="margin-top:14px"><b>Analysis</b><br>Delivered orders • Revenue intelligence</div>
         """
     )
 
