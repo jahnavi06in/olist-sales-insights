@@ -10,12 +10,6 @@ The dashboard helps analyze **revenue performance, order activity, category perf
 
 ---
 
-## 📸 Dashboard Preview
-
-<p align="center">
-  <img src="./dashboard%20olist.png.png" alt="Olist Sales Insights Dashboard" width="100%">
-</p>
-
 ### Executive Sales Overview
 
 The dashboard brings key sales and operational metrics together in one place, allowing users to monitor revenue, orders, Average Order Value, delivery performance, revenue trends, category performance, and business insights.
