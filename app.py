@@ -431,11 +431,8 @@ hr {
     background:
         rgba(70,65,60,0.40);
 }
-
-</style>
 """, unsafe_allow_html=True)
-
-    </style>
+</style>
     """,
     unsafe_allow_html=True,
 )
