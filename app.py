@@ -1055,18 +1055,13 @@ df = df.dropna(subset=["month"])
 with st.sidebar:
 
     st.markdown(
-        """
-        <div class="sidebar-brand">
-            <div class="sidebar-brand-title">
-                📊 Olist Sales Insights
-            </div>
-            <div class="sidebar-brand-subtitle">
-                Revenue & Sales Analytics
-            </div>
-        </div>
-        """,
+        '<div class="sidebar-brand">'
+        '<div class="sidebar-brand-title">Olist Sales Insights</div>'
+        '<div class="sidebar-brand-subtitle">Revenue & Sales Analytics</div>'
+        '</div>',
         unsafe_allow_html=True,
     )
+    
 
     st.markdown(
         '<div class="sidebar-section">Dashboard</div>',
