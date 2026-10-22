@@ -9,14 +9,15 @@ The dashboard helps users understand **revenue performance, order activity, cate
 🔗 **Live Dashboard:** https://olist-sales-insights-wk64yswh3kzjfehtns229w.streamlit.app/
 
 ---
+📸 Dashboard Preview
 
-## 📸 Dashboard Preview
+Executive Sales Overview
 
-### Executive Sales Overview
+The dashboard provides a centralized view of sales performance, combining revenue KPIs, order activity, Average Order Value, delivery performance, revenue trends, category performance, and business insights in a single analytical interface.
 
-The dashboard brings key sales and operational metrics into one place, allowing users to quickly monitor **revenue, orders, Average Order Value, delivery performance, revenue trends, and business insights**.
-
-![Olist Sales Insights Dashboard](dashboard_olist.png.png)
+<p align="center">
+  <img src="dashboard_olist.png.png" alt="Olist Sales Insights Dashboard" width="100%">
+</p>
 
 ---
 
