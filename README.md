@@ -2,241 +2,277 @@
 
 ### Sales Analytics & Revenue Intelligence Dashboard
 
-An interactive **sales analytics dashboard** built with Python and Streamlit to transform transactional e-commerce data into actionable insights around **revenue, orders, product categories, regional performance, and delivery operations**.
+An interactive **sales analytics and business intelligence dashboard** built with Python, Pandas, Plotly, and Streamlit to transform real-world e-commerce transactions into clear, actionable business insights.
 
-The project focuses on answering a practical business question:
-
-> **Where is revenue coming from, what is driving sales performance, and where should the business take action?**
+The dashboard helps users understand **revenue performance, order activity, category performance, regional sales, delivery operations, and business opportunities** through an interactive analytical interface.
 
 🔗 **Live Dashboard:** https://olist-sales-insights-wk64yswh3kzjfehtns229w.streamlit.app/
 
 ---
 
-## 📌 Business Problem
+## 📸 Dashboard Preview
 
-E-commerce businesses generate large volumes of transactional data, but raw order data does not directly explain business performance.
+### Executive Sales Overview
 
-A sales team or business manager needs to quickly understand:
+The dashboard brings key sales and operational metrics into one place, allowing users to quickly monitor **revenue, orders, Average Order Value, delivery performance, revenue trends, and business insights**.
 
-- How much revenue is being generated?
-- Is revenue growing or declining over time?
-- Which product categories contribute the most revenue?
-- Which regions are performing strongly?
-- What happens to sales when deliveries are delayed?
+![Olist Sales Insights Dashboard](dashboard_olist.png.png)
+
+---
+
+# 🎯 Business Problem
+
+E-commerce businesses generate large volumes of transactional data across products, categories, customers, regions, orders, and delivery operations.
+
+However, raw transaction data does not directly answer the questions that business teams need to make decisions:
+
+- Which categories are driving revenue?
+- Is sales performance improving or declining?
+- Which regions contribute the most sales?
+- Where are potential revenue opportunities?
+- Are delivery delays creating operational risk?
 - Which areas require management attention?
 
-Without a centralized analytical view, these questions require manually combining and analyzing multiple datasets.
+When these questions require manually combining multiple datasets and reports, it becomes difficult to identify important trends quickly.
 
-### The objective of this project
+### The core problem
 
-Build a **decision-oriented sales analytics dashboard** that converts raw Olist transaction data into clear business insights that can support revenue monitoring, category planning, regional analysis, and operational decisions.
-
----
-
-# 🎯 Project Objectives
-
-The dashboard was designed to:
-
-- Monitor overall sales performance
-- Track revenue and order trends
-- Analyze Average Order Value (AOV)
-- Identify high-performing and underperforming categories
-- Compare regional sales performance
-- Analyze category revenue concentration
-- Monitor delivery performance
-- Understand the relationship between delivery delays and sales
-- Generate actionable business recommendations
+> **How can raw e-commerce transaction data be transformed into a centralized, interactive analytical system that helps business teams understand sales performance and make faster, data-driven decisions?**
 
 ---
 
-# 📊 Dashboard Features
+# 💡 Solution
+
+**Olist Sales Insights** addresses this problem by combining multiple Olist datasets into a structured analytical layer and presenting the results through an interactive Streamlit dashboard.
+
+The solution provides a centralized view of:
+
+### 📈 Revenue Performance
+
+Track:
+
+- Total Revenue
+- Monthly Revenue
+- Revenue Trends
+- Month-over-Month Growth
+- Average Order Value
+- Revenue Contribution
+
+This helps users quickly identify changes in overall sales performance.
+
+### 🛍️ Category Performance
+
+Analyze:
+
+- Top-performing categories
+- Underperforming categories
+- Category revenue
+- Order volume
+- Category growth
+- Revenue concentration
+
+This helps identify which categories contribute most to business revenue.
+
+### 🌎 Regional Sales Performance
+
+Compare customer states to identify:
+
+- High-revenue regions
+- High-order regions
+- Regional performance differences
+- Areas requiring further investigation
+
+### 🚚 Delivery & Operational Performance
+
+Analyze:
+
+- Delivery duration
+- On-time vs late deliveries
+- Late-delivery rate
+- Revenue associated with delayed orders
+- Regional delivery performance
+- Review performance where available
+
+This connects operational performance with commercial outcomes.
+
+### 🎯 Business Decision Support
+
+The dashboard goes beyond displaying charts by providing a **Quick Business Read** that highlights important findings and areas requiring attention.
+
+The goal is to help users move from:
+
+**Data → Analysis → Insight → Decision**
+
+---
+
+# 📊 Dashboard Modules
 
 ## 1. Executive Sales Overview
 
-Provides a high-level view of business performance.
+A management-level summary of overall business performance.
 
-### Key KPIs
+### Key Metrics
 
 - Total Revenue
 - Total Orders
 - Average Order Value
-- Monthly Revenue
-- Revenue Growth
-- Sales Trends
+- Late Delivery Rate
+- Revenue Trends
+- Order Activity
 
-The overview helps decision-makers understand the current state of the business before moving into deeper analysis.
+**Business value:** Provides a fast overview of the current sales and operational picture.
 
 ---
 
 ## 2. Revenue Insights
 
-Analyzes how revenue changes over time and across business dimensions.
+Analyzes how revenue changes across time and business dimensions.
 
-### Key Analysis
+### Analysis Includes
 
 - Monthly revenue trends
-- Month-over-month revenue growth
-- Revenue concentration
-- Category contribution
+- Month-over-month growth
+- Revenue contribution
+- Category performance
 - Regional revenue performance
-- Growing and declining categories
+- Strong and weak revenue periods
 
-This section helps identify where revenue is increasing and where performance may require attention.
+**Business value:** Helps identify revenue growth patterns and periods requiring attention.
 
 ---
 
 ## 3. Sales & Category Performance
 
-Examines product-category performance from a sales perspective.
+Examines sales performance across product categories.
 
-### Key Analysis
+### Analysis Includes
 
 - Top-performing categories
-- Lowest-performing categories
-- Revenue by category
-- Orders by category
+- Lower-performing categories
+- Category revenue
+- Order volume
 - Average Order Value
 - Category growth
 - Revenue concentration / Pareto analysis
 
-This helps identify the categories that contribute most significantly to overall sales.
+**Business value:** Helps identify which categories are driving sales and where performance may be weaker.
 
 ---
 
 ## 4. Delivery Operations
 
-Connects operational performance with sales outcomes.
+Connects delivery performance with sales and customer outcomes.
 
-### Key Analysis
+### Analysis Includes
 
 - Average delivery time
-- On-time vs delayed deliveries
+- On-time vs delayed orders
+- Late-delivery rate
 - Revenue associated with delayed orders
-- AOV comparison
 - Regional delivery performance
 - Delivery performance by state
-- Review performance where review data is available
+- Review performance where available
 
-The goal is not simply to monitor logistics, but to understand how operational issues can affect the customer experience and commercial performance.
+**Business value:** Helps identify operational areas that may affect customer experience and business performance.
 
 ---
 
 ## 5. Business Insights
 
-The final section converts analysis into decision-oriented recommendations.
+The dashboard converts analytical findings into decision-oriented observations.
 
-Instead of only displaying charts, the dashboard highlights areas such as:
+### Quick Business Read
 
-- Revenue opportunities
-- Category performance issues
-- Regional opportunities
-- Delivery risk
-- Areas requiring management attention
+Highlights areas such as:
 
-This makes the dashboard more useful as a **business decision-support tool** rather than simply a visualization project.
+- Strong revenue periods
+- Delivery exposure
+- Order economics
+- Sales opportunities
+- Areas requiring further investigation
+
+**Business value:** Bridges the gap between visualization and business decision-making.
 
 ---
 
 # 🧠 Key Business Questions
 
-The dashboard is designed to answer questions such as:
+| Business Question | Analytical Solution |
+|---|---|
+| How are sales performing? | Revenue, order, AOV and KPI monitoring |
+| Is revenue growing or declining? | Monthly revenue and growth analysis |
+| Which categories drive sales? | Category revenue and order analysis |
+| Where does revenue come from? | Regional and category analysis |
+| Which categories need attention? | Category performance and growth comparisons |
+| Are delivery delays a risk? | Delivery-time and late-order analysis |
+| What should management investigate? | Business insights and recommendations |
 
-### Revenue
-- Is revenue increasing or declining?
-- Which periods generated the strongest sales?
-- How concentrated is revenue across categories?
+---
 
-### Sales
-- Which categories drive the most revenue?
-- Which categories have weaker performance?
-- How does Average Order Value change over time?
+# 🔄 Data-to-Decision Workflow
 
-### Regional Performance
-- Which states generate the most sales?
-- Are there regions with strong order volume but weaker revenue?
-
-### Operations
-- How frequently are orders delivered late?
-- Which regions have higher delivery risk?
-- How much revenue is associated with delayed orders?
-
-### Decision Making
-- Where should management focus attention?
-- Which categories deserve further investigation?
-- Which operational areas may represent a business risk?
+```text
+Raw Olist Transaction Data
+            ↓
+Data Cleaning & Integration
+            ↓
+Metric Engineering
+            ↓
+Sales & Revenue Analysis
+            ↓
+Interactive Visualization
+            ↓
+Business Insights
+            ↓
+Decision Support
+```
 
 ---
 
 # 📁 Dataset
 
-The project uses the **Brazilian Olist e-commerce dataset**, containing transactional information related to orders, products, customers, categories, delivery, and reviews.
+The project uses the **Brazilian Olist e-commerce dataset**, a real-world transactional dataset containing information about orders, products, customers, categories, deliveries, and reviews.
 
-The analysis combines multiple datasets to create a unified analytical layer.
-
-### Main data sources
+### Main Data Sources
 
 - Orders
-- Order items
+- Order Items
 - Customers
 - Products
-- Product category translation
-- Order reviews
+- Product Category Translation
+- Order Reviews
+
+Multiple datasets are joined and transformed into an analysis-ready structure before being used by the dashboard.
 
 ---
 
-# 🔄 Data Preparation
+# 🧹 Data Preparation
 
-The data pipeline performs several preparation steps before analysis:
+The data pipeline performs the following steps:
 
 1. Loads multiple Olist datasets
 2. Filters for delivered orders
-3. Removes records without delivery dates where required
+3. Removes records without required delivery dates
 4. Joins order, item, customer, and product information
 5. Translates product categories into English
 6. Creates monthly time periods
-7. Calculates revenue
+7. Calculates transaction-level revenue
 8. Calculates delivery duration
 9. Identifies late deliveries
 10. Integrates review scores when available
-11. Creates an analysis-ready dataset
-
-This creates a consistent data layer for the dashboard.
-
----
-
-# 🛠️ Tech Stack
-
-### Programming & Analysis
-
-- Python
-- Pandas
-- NumPy
-
-### Visualization
-
-- Plotly
-
-### Dashboard
-
-- Streamlit
-
-### Development
-
-- Jupyter Notebook
-- Git
-- GitHub
+11. Produces a structured dataset for analysis
 
 ---
 
 # 📐 Key Metrics
 
-### Revenue
+### Total Revenue
 
-Revenue is calculated from product price at the transaction level.
+Calculated from product transaction prices within the selected analysis period.
 
 ### Orders
 
-Orders are calculated using unique order IDs to avoid double-counting orders containing multiple products.
+Unique order IDs are used for order-level KPIs to avoid double-counting orders containing multiple items.
 
 ### Average Order Value
 
@@ -244,7 +280,7 @@ Orders are calculated using unique order IDs to avoid double-counting orders con
 AOV = Total Revenue / Total Orders
 ```
 
-### Month-over-Month Growth
+### Month-over-Month Revenue Growth
 
 ```text
 MoM Growth =
@@ -257,12 +293,40 @@ Previous Month Revenue × 100
 
 ```text
 Delivery Days =
-Delivered Date - Purchase Date
+Actual Delivery Date - Purchase Date
 ```
 
 ### Late Delivery
 
-An order is classified as late when the actual delivery date exceeds the estimated delivery date.
+An order is classified as late when:
+
+```text
+Actual Delivery Date > Estimated Delivery Date
+```
+
+---
+
+# 🛠️ Technology Stack
+
+### Programming & Data Analysis
+
+- **Python**
+- **Pandas**
+- **NumPy**
+
+### Visualization
+
+- **Plotly**
+
+### Dashboard
+
+- **Streamlit**
+
+### Development & Version Control
+
+- **Jupyter Notebook**
+- **Git**
+- **GitHub**
 
 ---
 
@@ -275,6 +339,8 @@ olist-sales-insights/
 ├── data.py
 ├── README.md
 ├── requirements.txt
+├── config.toml
+├── satisfaction_page.py
 │
 ├── data/
 │   ├── olist_orders_dataset.csv
@@ -284,13 +350,12 @@ olist-sales-insights/
 │   ├── olist_order_reviews_dataset.csv
 │   └── product_category_name_translation.csv
 │
-└── assets/
-    └── dashboard screenshots
+└── dashboard_olist.png.png
 ```
 
 ---
 
-# 🚀 Running the Project Locally
+# 🚀 Run Locally
 
 ### 1. Clone the repository
 
@@ -298,7 +363,7 @@ olist-sales-insights/
 git clone https://github.com/jahnavi06in/olist-sales-insights.git
 ```
 
-### 2. Move into the project folder
+### 2. Open the project directory
 
 ```bash
 cd olist-sales-insights
@@ -310,7 +375,7 @@ cd olist-sales-insights
 pip install -r requirements.txt
 ```
 
-### 4. Run the Streamlit application
+### 4. Run the Streamlit dashboard
 
 ```bash
 streamlit run app.py
@@ -322,7 +387,7 @@ The dashboard will open in your browser.
 
 # 🌐 Live Application
 
-Try the interactive dashboard:
+Experience the interactive dashboard:
 
 **https://olist-sales-insights-wk64yswh3kzjfehtns229w.streamlit.app/**
 
@@ -330,25 +395,41 @@ Try the interactive dashboard:
 
 # 💼 Business Value
 
-This project demonstrates how transactional data can be transformed into a practical business intelligence workflow:
+This project demonstrates an end-to-end **Data Analytics and Business Intelligence workflow**.
+
+It shows how raw transactional data can be transformed into a decision-support solution:
 
 ```text
-Raw Transaction Data
-        ↓
-Data Cleaning & Integration
-        ↓
-Metric Engineering
-        ↓
+Raw Data
+   ↓
+Cleaning
+   ↓
+Transformation
+   ↓
+KPI Development
+   ↓
 Exploratory Analysis
-        ↓
+   ↓
 Interactive Dashboard
-        ↓
+   ↓
 Business Insights
-        ↓
+   ↓
 Decision Support
 ```
 
-The focus is on moving beyond simply creating charts and instead building an analytical product that helps users understand **what happened, where it happened, and where action may be required**.
+The project focuses on answering three practical questions:
+
+### What happened?
+
+Understand revenue, orders, categories, regions, and delivery performance.
+
+### Where did it happen?
+
+Identify categories, regions, and operational areas contributing to performance changes.
+
+### Where should attention go?
+
+Use analytical findings to identify opportunities, risks, and areas requiring further investigation.
 
 ---
 
@@ -360,24 +441,26 @@ The focus is on moving beyond simply creating charts and instead building an ana
 - Data transformation
 - Exploratory Data Analysis
 - KPI development
-- Trend analysis
 - Revenue analysis
+- Trend analysis
 - Category analysis
 - Regional analysis
 - Operational analysis
 
 ### Business Intelligence
 
-- Dashboard development
-- Interactive filtering
+- Interactive dashboard development
 - KPI monitoring
+- Data visualization
 - Business storytelling
 - Decision-oriented reporting
+- Insight generation
 
 ### Technical
 
 - Python
 - Pandas
+- NumPy
 - Plotly
 - Streamlit
 - Git
@@ -385,36 +468,38 @@ The focus is on moving beyond simply creating charts and instead building an ana
 
 ---
 
-# 🔮 Future Improvements
+# 🔮 Future Enhancements
 
-Potential future enhancements include:
+Potential future improvements include:
 
-- Automated sales forecasting
+- Sales forecasting
+- Automated anomaly detection
 - Customer-level revenue analysis
-- Advanced anomaly detection
-- More granular product analysis
-- Automated dashboard alerts
+- Product-level performance analysis
+- Automated alerts for revenue declines
 - Scheduled data refresh
 - Additional payment and customer behavior analysis
 
-These improvements would extend the dashboard from descriptive analytics toward more advanced predictive and prescriptive capabilities.
+These enhancements could extend the project from descriptive analytics toward more advanced predictive and prescriptive analytics.
 
 ---
 
 # 👩‍💻 Author
 
-**Jahnavi J**
+## Jahnavi J
 
-BCA Student | Aspiring Data Analyst / Business Analyst
+**BCA Student | Aspiring Data Analyst / Business Analyst**
 
-Focused on building practical analytics projects using **Python, SQL, Power BI, Tableau, Excel, and Streamlit**.
+Interested in building practical analytics solutions using:
+
+**Python • SQL • Power BI • Tableau • Excel • Pandas • Streamlit**
 
 ---
 
-## ⭐ Project Highlights
+# ⭐ Project Summary
 
-**Olist Sales Insights** demonstrates an end-to-end analytics workflow:
+**Olist Sales Insights** transforms real-world e-commerce transactions into an interactive sales analytics platform for monitoring:
 
-**Data → Analysis → Visualization → Business Insight → Decision Support**
+**Revenue → Sales → Categories → Regions → Delivery → Business Insights**
 
-If you find the project useful, consider giving the repository a ⭐ on GitHub.
+The project demonstrates how raw business data can be transformed into a **clear, interactive, and decision-oriented analytics solution**.
