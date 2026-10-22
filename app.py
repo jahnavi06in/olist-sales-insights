@@ -16,19 +16,13 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-
 # =========================================================
-# CUSTOM CSS
+# PREMIUM GLASS THEME
 # =========================================================
 
-   st.markdown("""
+st.markdown("""
 <style>
 
-/* =========================================================
-   PREMIUM GLASSMORPHISM — NEUTRAL / NO BLUE / NO PURPLE
-   ========================================================= */
-
-/* ---------- MAIN BACKGROUND ---------- */
 
 .stApp {
     background:
