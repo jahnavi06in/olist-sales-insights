@@ -24,429 +24,425 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* =========================================================
-   PREMIUM NEUTRAL GLASS THEME
+   st.markdown("""
+<style>
+
+/* =========================================================
+   PREMIUM GLASSMORPHISM — NEUTRAL / NO BLUE / NO PURPLE
    ========================================================= */
+
+/* ---------- MAIN BACKGROUND ---------- */
 
 .stApp {
     background:
         radial-gradient(
-            circle at 10% 10%,
-            rgba(255, 255, 255, 0.95),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 15%,
-            rgba(244, 239, 230, 0.75),
+            circle at 5% 5%,
+            rgba(255,255,255,0.95) 0%,
             transparent 28%
         ),
         radial-gradient(
+            circle at 95% 10%,
+            rgba(218,210,198,0.55) 0%,
+            transparent 30%
+        ),
+        radial-gradient(
             circle at 50% 100%,
-            rgba(232, 229, 223, 0.55),
+            rgba(205,198,188,0.45) 0%,
             transparent 35%
         ),
         linear-gradient(
             135deg,
             #ffffff 0%,
-            #f5f3ef 48%,
-            #ebe8e2 100%
+            #f3f0eb 45%,
+            #e6e1d9 100%
         );
+
+    color: #1c1a18;
 }
 
-/* ---------- GLASS CARDS ---------- */
 
-.kpi-card,
-.insight-card,
+/* ---------- MAIN CONTENT ---------- */
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+
+/* ---------- SIDEBAR ---------- */
+
+[data-testid="stSidebar"] {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.82),
+            rgba(232,228,221,0.65)
+        );
+
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border-right: 1px solid rgba(255,255,255,0.9);
+
+    box-shadow:
+        8px 0 35px rgba(40,35,30,0.06);
+}
+
+
+/* ---------- TITLE ---------- */
+
+h1 {
+    color: #181715 !important;
+    font-weight: 800 !important;
+    letter-spacing: -1.5px;
+}
+
+h2 {
+    color: #24211e !important;
+    font-weight: 750 !important;
+}
+
+h3 {
+    color: #302d29 !important;
+}
+
+
+/* ---------- CAPTION ---------- */
+
+.stCaption {
+    color: #69645d !important;
+}
+
+
+/* =========================================================
+   GLASS KPI CARDS
+   ========================================================= */
+
+.kpi-card {
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.88),
+            rgba(255,255,255,0.48)
+        );
+
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+
+    border: 1px solid rgba(255,255,255,0.95);
+
+    border-radius: 22px;
+
+    padding: 22px 24px;
+
+    box-shadow:
+        0 20px 45px rgba(40,35,30,0.09),
+        0 4px 12px rgba(40,35,30,0.04),
+        inset 0 1px 0 rgba(255,255,255,1);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* Glass reflection */
+
+.kpi-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -70px;
+    left: -50px;
+
+    width: 180px;
+    height: 140px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.85),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Hover */
+
+.kpi-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 28px 55px rgba(40,35,30,0.13),
+        0 8px 18px rgba(40,35,30,0.06),
+        inset 0 1px 0 rgba(255,255,255,1);
+}
+
+
+/* KPI text */
+
+.kpi-label {
+    color: #77716a !important;
+    font-size: 0.82rem;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.kpi-value {
+    color: #171614 !important;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.kpi-note {
+    color: #817b73 !important;
+}
+
+
+/* =========================================================
+   GLASS INSIGHT CARDS
+   ========================================================= */
+
+.insight-card {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.78),
+            rgba(248,246,242,0.46)
+        );
+
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(255,255,255,0.9);
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 18px 40px rgba(40,35,30,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.95);
+}
+
+
+/* =========================================================
+   DECISION CARDS
+   ========================================================= */
+
 .decision-card {
 
     background:
         linear-gradient(
             135deg,
-            rgba(255,255,255,0.82),
-            rgba(248,247,244,0.58)
+            rgba(255,255,255,0.84),
+            rgba(235,231,224,0.52)
         );
 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
 
-    border: 1px solid rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.92);
 
-    box-shadow:
-        0 12px 35px rgba(40, 38, 34, 0.07),
-        inset 0 1px 0 rgba(255,255,255,0.95);
+    border-radius: 22px;
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.kpi-card:hover,
-.insight-card:hover,
-.decision-card:hover {
-
-    transform: translateY(-2px);
+    padding: 24px;
 
     box-shadow:
-        0 18px 42px rgba(40, 38, 34, 0.11),
+        0 22px 48px rgba(40,35,30,0.10),
         inset 0 1px 0 rgba(255,255,255,1);
 }
 
-/* ---------- KPI VALUES ---------- */
 
-.kpi-value {
-    color: #171717;
-}
+/* =========================================================
+   CHART GLASS CONTAINERS
+   ========================================================= */
 
-/* ---------- SIDEBAR ---------- */
-
-[data-testid="stSidebar"] {
+[data-testid="stPlotlyChart"] {
 
     background:
         linear-gradient(
-            180deg,
-            rgba(255,255,255,0.88),
-            rgba(242,240,236,0.72)
+            135deg,
+            rgba(255,255,255,0.72),
+            rgba(248,246,242,0.40)
         );
 
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
 
-    border-right: 1px solid rgba(255,255,255,0.9);
+    border-radius: 22px;
+
+    border: 1px solid rgba(255,255,255,0.88);
+
+    padding: 8px;
+
+    box-shadow:
+        0 18px 40px rgba(40,35,30,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.95);
 }
 
-/* ---------- FILTER BOX ---------- */
+
+/* =========================================================
+   FILTER GLASS
+   ========================================================= */
 
 .filter-note {
 
     background:
         linear-gradient(
             135deg,
-            rgba(255,255,255,0.75),
-            rgba(240,238,233,0.60)
-        );
-
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-
-    border: 1px solid rgba(255,255,255,0.85);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.95);
-}
-
-/* ---------- SECTION TITLES ---------- */
-
-.section-title {
-    color: #171717;
-}
-
-/* ---------- HERO ---------- */
-
-.hero {
-
-    background:
-        radial-gradient(
-            circle at 85% 15%,
-            rgba(255,255,255,0.16),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 15% 90%,
-            rgba(220,215,205,0.14),
-            transparent 28%
-        ),
-        linear-gradient(
-            135deg,
-            #181818 0%,
-            #292725 50%,
-            #3a3732 100%
+            rgba(255,255,255,0.80),
+            rgba(238,234,227,0.50)
         );
 
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
 
-    border: 1px solid rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.9);
+
+    border-radius: 18px;
+
+    padding: 15px 18px;
 
     box-shadow:
-        0 25px 60px rgba(35,32,28,0.18),
-        inset 0 1px 0 rgba(255,255,255,0.14);
+        0 12px 30px rgba(40,35,30,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.95);
 }
 
-/* ---------- CHART GLASS ---------- */
 
-[data-testid="stPlotlyChart"] {
+/* =========================================================
+   STREAMLIT INPUTS
+   ========================================================= */
 
-    background: rgba(255,255,255,0.42);
+[data-baseweb="select"] > div {
 
-    border-radius: 16px;
+    background:
+        rgba(255,255,255,0.60) !important;
 
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(18px);
 
-    border: 1px solid rgba(255,255,255,0.72);
+    border:
+        1px solid rgba(255,255,255,0.85) !important;
+
+    border-radius: 14px !important;
 
     box-shadow:
-        0 10px 30px rgba(40,38,34,0.05);
+        inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
-/* ---------- TABLE ---------- */
+
+/* =========================================================
+   DATAFRAME
+   ========================================================= */
 
 [data-testid="stDataFrame"] {
 
-    border-radius: 16px;
+    border-radius: 20px;
+
+    overflow: hidden;
 
     box-shadow:
-        0 10px 28px rgba(40,38,34,0.06);
+        0 18px 40px rgba(40,35,30,0.07);
 }
 
-    /* ---------- GLOBAL ---------- */
 
-    .stApp {
-        background: #f6f7fb;
-    }
+/* =========================================================
+   DIVIDERS
+   ========================================================= */
 
-    .main .block-container {
-        max-width: 1450px;
-        padding-top: 1.5rem;
-        padding-bottom: 3rem;
-    }
+hr {
 
-    [data-testid="stSidebar"] {
-        background: #ffffff;
-        border-right: 1px solid #e8eaf0;
-    }
+    border: none !important;
 
-    [data-testid="stSidebar"] > div:first-child {
-        padding-top: 1.5rem;
-    }
+    height: 1px;
 
-    /* ---------- SIDEBAR ---------- */
-
-    .sidebar-brand {
-        padding: 0.4rem 0.2rem 1.4rem 0.2rem;
-    }
-
-    .sidebar-brand-title {
-        font-size: 1.25rem;
-        font-weight: 800;
-        color: #111827;
-        letter-spacing: -0.02em;
-    }
-
-    .sidebar-brand-subtitle {
-        font-size: 0.78rem;
-        color: #6b7280;
-        margin-top: 0.25rem;
-    }
-
-    .sidebar-section {
-        font-size: 0.72rem;
-        font-weight: 800;
-        color: #9ca3af;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-top: 1.2rem;
-        margin-bottom: 0.5rem;
-    }
-
-    /* ---------- HERO ---------- */
-
-    .hero {
-        background: linear-gradient(
-            135deg,
-            #111827 0%,
-            #1f2937 55%,
-            #312e81 100%
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(70,65,60,0.16),
+            transparent
         );
-        border-radius: 20px;
-        padding: 2.1rem 2.3rem;
-        margin-bottom: 1.4rem;
-        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.12);
-    }
+}
 
-    .hero-eyebrow {
-        color: #a5b4fc;
-        font-size: 0.72rem;
-        font-weight: 800;
-        letter-spacing: 0.13em;
-        margin-bottom: 0.55rem;
-    }
 
-    .hero-title {
-        color: #ffffff;
-        font-size: 2.25rem;
-        line-height: 1.1;
-        font-weight: 850;
-        letter-spacing: -0.04em;
-    }
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
-    .hero-text {
-        color: #d1d5db;
-        font-size: 0.98rem;
-        margin-top: 0.7rem;
-        max-width: 720px;
-        line-height: 1.55;
-    }
+.stButton > button {
 
-    /* ---------- SECTION HEADERS ---------- */
+    background:
+        linear-gradient(
+            135deg,
+            #292622,
+            #454039
+        );
 
-    .section-title {
-        font-size: 1.28rem;
-        font-weight: 800;
-        color: #111827;
-        margin-top: 1.4rem;
-        margin-bottom: 0.1rem;
-        letter-spacing: -0.025em;
-    }
+    color: white;
 
-    .section-subtitle {
-        font-size: 0.82rem;
-        color: #6b7280;
-        margin-bottom: 0.85rem;
-    }
+    border: 1px solid rgba(255,255,255,0.25);
 
-    /* ---------- KPI CARDS ---------- */
+    border-radius: 13px;
 
-    .kpi-card {
-        background: #ffffff;
-        border: 1px solid #e8eaf0;
-        border-radius: 16px;
-        padding: 1.05rem 1.15rem;
-        min-height: 122px;
-        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
-    }
+    padding: 8px 20px;
 
-    .kpi-label {
-        color: #6b7280;
-        font-size: 0.76rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.045em;
-    }
+    box-shadow:
+        0 8px 20px rgba(35,32,28,0.16);
 
-    .kpi-value {
-        color: #111827;
-        font-size: 1.65rem;
-        font-weight: 850;
-        margin-top: 0.4rem;
-        letter-spacing: -0.035em;
-    }
+    transition: all 0.2s ease;
+}
 
-    .kpi-note {
-        color: #9ca3af;
-        font-size: 0.73rem;
-        margin-top: 0.3rem;
-    }
+.stButton > button:hover {
 
-    /* ---------- INSIGHT CARDS ---------- */
+    transform: translateY(-2px);
 
-    .insight-card {
-        background: #ffffff;
-        border: 1px solid #e8eaf0;
-        border-radius: 16px;
-        padding: 1.15rem 1.25rem;
-        min-height: 155px;
-        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
-    }
+    box-shadow:
+        0 12px 26px rgba(35,32,28,0.22);
+}
 
-    .insight-label {
-        color: #6366f1;
-        font-size: 0.72rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-bottom: 0.45rem;
-    }
 
-    .insight-title {
-        color: #111827;
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 0.4rem;
-    }
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
 
-    .insight-text {
-        color: #4b5563;
-        font-size: 0.82rem;
-        line-height: 1.55;
-    }
+::-webkit-scrollbar {
+    width: 8px;
+}
 
-    /* ---------- DECISION CARDS ---------- */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-    .decision-card {
-        background: #ffffff;
-        border-left: 4px solid #6366f1;
-        border-top: 1px solid #e8eaf0;
-        border-right: 1px solid #e8eaf0;
-        border-bottom: 1px solid #e8eaf0;
-        border-radius: 12px;
-        padding: 1rem 1.1rem;
-        margin-bottom: 0.75rem;
-    }
+::-webkit-scrollbar-thumb {
 
-    .decision-title {
-        color: #111827;
-        font-size: 0.9rem;
-        font-weight: 800;
-        margin-bottom: 0.25rem;
-    }
+    background:
+        rgba(70,65,60,0.25);
 
-    .decision-text {
-        color: #4b5563;
-        font-size: 0.8rem;
-        line-height: 1.5;
-    }
+    border-radius: 20px;
+}
 
-    /* ---------- FILTER BOX ---------- */
+::-webkit-scrollbar-thumb:hover {
 
-    .filter-note {
-        background: #f8fafc;
-        border: 1px solid #e5e7eb;
-        border-radius: 10px;
-        padding: 0.7rem 0.8rem;
-        color: #6b7280;
-        font-size: 0.74rem;
-        line-height: 1.45;
-        margin-top: 0.5rem;
-    }
+    background:
+        rgba(70,65,60,0.40);
+}
 
-    /* ---------- TABLE ---------- */
-
-    [data-testid="stDataFrame"] {
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    /* ---------- FOOTER ---------- */
-
-    .footer {
-        text-align: center;
-        color: #9ca3af;
-        font-size: 0.72rem;
-        padding-top: 2.5rem;
-        padding-bottom: 0.5rem;
-    }
-
-    /* ---------- MOBILE ---------- */
-
-    @media (max-width: 768px) {
-
-        .hero {
-            padding: 1.5rem;
-        }
-
-        .hero-title {
-            font-size: 1.7rem;
-        }
-
-        .hero-text {
-            font-size: 0.88rem;
-        }
-
-        .kpi-value {
-            font-size: 1.35rem;
-        }
-    }
+</style>
+""", unsafe_allow_html=True)
 
     </style>
     """,
