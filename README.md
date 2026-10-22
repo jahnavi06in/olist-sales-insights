@@ -2,22 +2,21 @@
 
 ### Sales Analytics & Revenue Intelligence Dashboard
 
-An interactive **sales analytics and business intelligence dashboard** built with Python, Pandas, Plotly, and Streamlit to transform real-world e-commerce transactions into clear, actionable business insights.
+An interactive **sales analytics and business intelligence dashboard** built with Python, Pandas, Plotly, and Streamlit to transform real-world e-commerce transaction data into clear, actionable business insights.
 
-The dashboard helps users understand **revenue performance, order activity, category performance, regional sales, delivery operations, and business opportunities** through an interactive analytical interface.
+The dashboard helps analyze **revenue performance, order activity, category performance, regional sales, delivery operations, and business opportunities** through an interactive analytical interface.
 
-🔗 **Live Dashboard:** https://olist-sales-insights-wk64yswh3kzjfehtns229w.streamlit.app/
+**🔗 Live Dashboard:** https://olist-sales-insights-wk64yswh3kzjfehtns229w.streamlit.app/
 
 ---
-📸 Dashboard Preview
 
-Executive Sales Overview
+## 📸 Dashboard Preview
 
-The dashboard provides a centralized view of sales performance, combining revenue KPIs, order activity, Average Order Value, delivery performance, revenue trends, category performance, and business insights in a single analytical interface.
+### Executive Sales Overview
 
-<p align="center">
-  <img src="dashboard_olist.png.png" alt="Olist Sales Insights Dashboard" width="100%">
-</p>
+The dashboard brings key sales and operational metrics together in one place, allowing users to monitor **revenue, orders, Average Order Value, delivery performance, revenue trends, category performance, and business insights**.
+
+![Olist Sales Insights Dashboard](dashboard_olist.png.png)
 
 ---
 
@@ -36,7 +35,7 @@ However, raw transaction data does not directly answer the questions that busine
 
 When these questions require manually combining multiple datasets and reports, it becomes difficult to identify important trends quickly.
 
-### The core problem
+### The Core Problem
 
 > **How can raw e-commerce transaction data be transformed into a centralized, interactive analytical system that helps business teams understand sales performance and make faster, data-driven decisions?**
 
@@ -59,7 +58,7 @@ Track:
 - Average Order Value
 - Revenue Contribution
 
-This helps users quickly identify changes in overall sales performance.
+This helps users identify changes in overall sales performance.
 
 ### 🛍️ Category Performance
 
@@ -100,13 +99,13 @@ This connects operational performance with commercial outcomes.
 
 The dashboard goes beyond displaying charts by providing a **Quick Business Read** that highlights important findings and areas requiring attention.
 
-The goal is to help users move from:
+The goal is to move from:
 
 **Data → Analysis → Insight → Decision**
 
 ---
 
-# 📊 Dashboard Modules
+# 📊 Dashboard Features
 
 ## 1. Executive Sales Overview
 
@@ -311,23 +310,23 @@ Actual Delivery Date > Estimated Delivery Date
 
 ### Programming & Data Analysis
 
-- **Python**
-- **Pandas**
-- **NumPy**
+- Python
+- Pandas
+- NumPy
 
 ### Visualization
 
-- **Plotly**
+- Plotly
 
 ### Dashboard
 
-- **Streamlit**
+- Streamlit
 
 ### Development & Version Control
 
-- **Jupyter Notebook**
-- **Git**
-- **GitHub**
+- Jupyter Notebook
+- Git
+- GitHub
 
 ---
 
